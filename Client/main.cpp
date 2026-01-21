@@ -2,10 +2,13 @@
 #include <serial/serial.h>
 
 #include "SystemUtils.h"
+#include "Config.h"
 
 int main()
 {
-    std::string port = "COM5";
+    Config::Init();
+
+    std::string port = "/dev/ttyUSB0";
     unsigned long baud = 115200;
 
     serial::Serial mySerial(port, baud, serial::Timeout::simpleTimeout(1000));
