@@ -21,35 +21,35 @@ void loop()
 {
   if (digitalRead(13) == LOW)
   {
-    Serial.printf("P%iB1", currentPage);
+    Serial.printf("P%iF1", currentPage);
   }
   else if (digitalRead(12) == LOW)
   {
-    Serial.printf("P%iB2", currentPage);
+    Serial.printf("P%iF2", currentPage);
   }
   else if (digitalRead(14) == LOW)
   {
-    Serial.printf("P%iB3", currentPage);
+    Serial.printf("P%iF3", currentPage);
   }
   else if (digitalRead(27) == LOW)
   {
-    Serial.printf("P%iB4", currentPage);
+    Serial.printf("P%iF4", currentPage);
   }
   else if (digitalRead(26) == LOW)
   {
-    Serial.printf("P%iB5", currentPage);
+    Serial.printf("P%iF5", currentPage);
   }
   else if (digitalRead(25) == LOW)
   {
-    Serial.printf("P%iB6", currentPage);
+    Serial.printf("P%iF6", currentPage);
   }
   else if (digitalRead(33) == LOW)
   {
-    Serial.printf("P%iB7", currentPage);
+    Serial.printf("P%iF7", currentPage);
   }
   else if (digitalRead(32) == LOW)
   {
-    Serial.printf("P%iB8", currentPage);
+    Serial.printf("P%iF8", currentPage);
   }
 
   delay(100);
