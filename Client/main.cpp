@@ -2,10 +2,14 @@
 #include <serial/serial.h>
 
 #include "SystemUtils.h"
+#include "Config.h"
+#include "Utils.h"
 
 int main()
 {
-    std::string port = "COM5";
+    Config::Init();
+
+    std::string port = "/dev/ttyUSB0";
     unsigned long baud = 115200;
 
     serial::Serial mySerial(port, baud, serial::Timeout::simpleTimeout(1000));
@@ -28,11 +32,22 @@ int main()
             std::string data = mySerial.readline();
 
             std::cout << data << std::endl;
+
+            // for (auto &&i : container)
+            // {
+                
+            // }
+            
+
+            // if(data.substr(0, 4))
+
             if (data[3] == '1')
             {
                 std::cout << "SystemUtils::mediaPlayPause();" << std::endl;
                 SystemUtils::mediaPlayPause();
             }
+
+
         }
     }
 
