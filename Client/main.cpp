@@ -8,8 +8,11 @@
 int main()
 {
     Config::Init();
+    Config::Write(std::make_pair("P0F1", std::to_string(SystemUtils::Types::MEDIA_PREVIOUS)));
+    Config::Write(std::make_pair("P0F2", std::to_string(SystemUtils::Types::MEDIA_PLAYPAUSE)));
+    Config::Write(std::make_pair("P0F3", std::to_string(SystemUtils::Types::MEDIA_NEXT)));
 
-    std::string port = "/dev/ttyUSB0";
+    std::string port = "COM6";
     unsigned long baud = 115200;
 
     serial::Serial mySerial(port, baud, serial::Timeout::simpleTimeout(1000));
@@ -25,6 +28,8 @@ int main()
         return -1;
     }
 
+    std::vector<std::pair<std::string, std::string>> cfg = Config::Get();
+    
     while (true)
     {
         if (mySerial.available())
@@ -33,21 +38,24 @@ int main()
 
             std::cout << data << std::endl;
 
-            // for (auto &&i : container)
-            // {
-                
-            // }
-            
-
-            // if(data.substr(0, 4))
-
-            if (data[3] == '1')
+            for (auto &&i : cfg)
             {
-                std::cout << "SystemUtils::mediaPlayPause();" << std::endl;
-                SystemUtils::mediaPlayPause();
+                if (i.first == data.substr(0, 4))
+                {
+                    if (i.second == std::to_string(SystemUtils::Types::MEDIA_PREVIOUS))
+                    {
+                        SystemUtils::mediaPrevious();
+                    }
+                    else if (i.second == std::to_string(SystemUtils::Types::MEDIA_PLAYPAUSE))
+                    {
+                        SystemUtils::mediaPlayPause();
+                    }
+                    else if (i.second == std::to_string(SystemUtils::Types::MEDIA_NEXT))
+                    {
+                        SystemUtils::mediaNext();
+                    }
+                }
             }
-
-
         }
     }
 

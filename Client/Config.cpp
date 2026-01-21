@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <iostream>
-#include <vector>
 #include <filesystem>
 
 namespace Config 
@@ -66,5 +65,34 @@ namespace Config
             }
             outFile.close();
         }
+    }
+
+    std::vector<std::pair<std::string, std::string>> Get()
+    {
+        std::vector<std::pair<std::string, std::string>> buffer;
+        std::ifstream outFile("config.wcfg");
+        std::string line;
+
+        if (outFile.is_open())
+        {
+            while (std::getline(outFile, line)) 
+            {
+                if (line.empty()) continue;
+
+                std::vector<std::string> split = Utils::Split(line, '|');
+                
+                if (split.size() >= 2)
+                {
+                    buffer.push_back(std::make_pair(split[0], split[1]));
+                }
+                else if (split.size() == 1)
+                {
+                    buffer.push_back(std::make_pair(split[0], ""));
+                }
+            }
+            outFile.close();
+        }
+
+        return buffer;
     }
 }
