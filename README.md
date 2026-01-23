@@ -52,7 +52,3 @@ Hardware: Espressif ESP-32 and 8x2 push buttons connected to individual pins.
 - - `P3F8`
 
 - Maximum 9 Pages (for simplification).
-
-## Known issues:
-
-- Very long delay when sending button presses to the client.
