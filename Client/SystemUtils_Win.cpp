@@ -23,4 +23,14 @@ namespace SystemUtils
     {
         ShellExecuteA(0, "open", url.c_str(), 0, 0, SW_SHOWNORMAL);
     }
+
+    void volumeUp()
+    {
+        keybd_event(VK_VOLUME_UP, 0, 0, 0);
+    }
+
+    void volumeDown()
+    {
+        keybd_event(VK_VOLUME_DOWN, 0, 0, 0);
+    }
 }

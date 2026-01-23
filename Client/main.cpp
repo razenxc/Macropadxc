@@ -11,8 +11,10 @@ int main()
     Config::Write(std::make_pair("P0F1", std::to_string(SystemUtils::Types::MEDIA_PREVIOUS)));
     Config::Write(std::make_pair("P0F2", std::to_string(SystemUtils::Types::MEDIA_PLAYPAUSE)));
     Config::Write(std::make_pair("P0F3", std::to_string(SystemUtils::Types::MEDIA_NEXT)));
+    Config::Write(std::make_pair("P0F4", std::to_string(SystemUtils::Types::VOLUME_UP)));
+    Config::Write(std::make_pair("P0F8", std::to_string(SystemUtils::Types::VOLUME_DOWN)));
 
-    std::string port = "/dev/ttyUSB0";
+    std::string port = "COM6";
     unsigned long baud = 115200;
 
     serial::Serial mySerial(port, baud, serial::Timeout::simpleTimeout(1000));
@@ -56,6 +58,16 @@ int main()
                     {
                         std::cout << "Executing SystemUtils::mediaNext();" << std::endl;
                         SystemUtils::mediaNext();
+                    }
+                    else if (i.second == std::to_string(SystemUtils::Types::VOLUME_UP))
+                    {
+                        std::cout << "Executing SystemUtils::volumeUp();" << std::endl;
+                        SystemUtils::volumeUp();
+                    }
+                    else if (i.second == std::to_string(SystemUtils::Types::VOLUME_DOWN))
+                    {
+                        std::cout << "Executing SystemUtils::volumeDown();" << std::endl;
+                        SystemUtils::volumeDown();
                     }
                 }
             }
