@@ -12,7 +12,7 @@ int main()
     Config::Write(std::make_pair("P0F2", std::to_string(SystemUtils::Types::MEDIA_PLAYPAUSE)));
     Config::Write(std::make_pair("P0F3", std::to_string(SystemUtils::Types::MEDIA_NEXT)));
 
-    std::string port = "COM6";
+    std::string port = "/dev/ttyUSB0";
     unsigned long baud = 115200;
 
     serial::Serial mySerial(port, baud, serial::Timeout::simpleTimeout(1000));
@@ -36,7 +36,7 @@ int main()
         {
             std::string data = mySerial.readline();
 
-            std::cout << data << std::endl;
+            std::cout << "Received data: " << data << std::endl;
 
             for (auto &&i : cfg)
             {
@@ -44,14 +44,17 @@ int main()
                 {
                     if (i.second == std::to_string(SystemUtils::Types::MEDIA_PREVIOUS))
                     {
+                        std::cout << "Executing SystemUtils::mediaPrevious();" << std::endl;
                         SystemUtils::mediaPrevious();
                     }
                     else if (i.second == std::to_string(SystemUtils::Types::MEDIA_PLAYPAUSE))
                     {
+                        std::cout << "Executing SystemUtils::mediaPlayPause();" << std::endl;
                         SystemUtils::mediaPlayPause();
                     }
                     else if (i.second == std::to_string(SystemUtils::Types::MEDIA_NEXT))
                     {
+                        std::cout << "Executing SystemUtils::mediaNext();" << std::endl;
                         SystemUtils::mediaNext();
                     }
                 }
