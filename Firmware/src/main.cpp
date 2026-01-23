@@ -2,55 +2,44 @@
 
 unsigned short currentPage = 0;
 
+const unsigned PINS[] = { 13, 12, 14, 27, 26, 25, 33, 32 };
+const unsigned short BUTTON_COUNT = 8;
+
+int lastButtonState[BUTTON_COUNT];
+
+unsigned long lastDepressTime[BUTTON_COUNT];
+const unsigned long DEPRESS_DELAY = 50;
+
 void setup()
 {
   Serial.begin(115200);
 
-  
-  pinMode(13, INPUT_PULLUP); // F1
-  pinMode(12, INPUT_PULLUP); // F2
-  pinMode(14, INPUT_PULLUP); // F3
-  pinMode(27, INPUT_PULLUP); // F4
-  pinMode(26, INPUT_PULLUP); // F5
-  pinMode(25, INPUT_PULLUP); // F6
-  pinMode(33, INPUT_PULLUP); // F7
-  pinMode(32, INPUT_PULLUP); // F8
+  for (int i = 0; i < BUTTON_COUNT; i++) {
+    pinMode(PINS[i], INPUT_PULLUP);
+    lastButtonState[i] = HIGH; 
+    lastDepressTime[i] = 0;
+  }
 }
 
 void loop()
 {
-  if (digitalRead(13) == LOW)
+  for (int i = 0; i < BUTTON_COUNT; i++)
   {
-    Serial.printf("P%iF1", currentPage);
-  }
-  else if (digitalRead(12) == LOW)
-  {
-    Serial.printf("P%iF2", currentPage);
-  }
-  else if (digitalRead(14) == LOW)
-  {
-    Serial.printf("P%iF3", currentPage);
-  }
-  else if (digitalRead(27) == LOW)
-  {
-    Serial.printf("P%iF4", currentPage);
-  }
-  else if (digitalRead(26) == LOW)
-  {
-    Serial.printf("P%iF5", currentPage);
-  }
-  else if (digitalRead(25) == LOW)
-  {
-    Serial.printf("P%iF6", currentPage);
-  }
-  else if (digitalRead(33) == LOW)
-  {
-    Serial.printf("P%iF7", currentPage);
-  }
-  else if (digitalRead(32) == LOW)
-  {
-    Serial.printf("P%iF8", currentPage);
-  }
+    int currentState = digitalRead(PINS[i]);
 
-  delay(100);
+    if (currentState != lastButtonState[i])
+    {
+      if ((millis() - lastDepressTime[i]) > DEPRESS_DELAY)
+      {
+        if (currentState == LOW)
+        {
+          Serial.printf("P%iF%i\n", currentPage, i+1);
+        }
+
+        lastDepressTime[i] = millis();
+      }
+
+      lastButtonState[i] = currentState;
+    }
+  }
 }
