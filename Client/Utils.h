@@ -5,5 +5,5 @@
 
 namespace Utils
 {
-    std::vector<std::string> Split(std::string data);
+    std::vector<std::string> Split(std::string data, char ch);
 }

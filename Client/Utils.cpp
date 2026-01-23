@@ -4,16 +4,17 @@
 
 namespace Utils
 {
-    std::vector<std::string> Split(std::string data)
+    std::vector<std::string> Split(std::string data, char ch)
     {
-        std::vector<std::string> tokens;
-        std::istringstream iss(data);
-        std::string token;
-        
-        while (iss >> token) {
-            tokens.push_back(token);
+        std::vector<std::string> result;
+        std::stringstream ss(data);
+        std::string item;
+
+        while (std::getline(ss, item, ch)) 
+        {
+            result.push_back(item);
         }
-        
-        return tokens;
+
+        return result;
     }
 }
