@@ -27,5 +27,5 @@ else()
     set(PLATFORM_SOURCES SystemUtils_Linux.cpp)
 endif()
 
-add_executable(WareInteractionClient main.cpp SystemUtils.h Config.h Config.cpp Utils.h Utils.cpp ${PLATFORM_SOURCES})
+add_executable(WareInteractionClient main.cpp SystemUtils.h Config.h Config.cpp Utils.h Utils.cpp Actions.h Actions.cpp ${PLATFORM_SOURCES})
 target_link_libraries(WareInteractionClient PRIVATE serial)

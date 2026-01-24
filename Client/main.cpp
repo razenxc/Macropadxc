@@ -1,75 +1,75 @@
 #include <iostream>
 #include <serial/serial.h>
+#include <chrono>
+#include <thread>
 
 #include "SystemUtils.h"
 #include "Config.h"
 #include "Utils.h"
+#include "Actions.h"
 
 int main()
 {
-    Config::Init();
-    Config::Write(std::make_pair("P0F1", std::to_string(SystemUtils::Types::MEDIA_PREVIOUS)));
-    Config::Write(std::make_pair("P0F2", std::to_string(SystemUtils::Types::MEDIA_PLAYPAUSE)));
-    Config::Write(std::make_pair("P0F3", std::to_string(SystemUtils::Types::MEDIA_NEXT)));
-    Config::Write(std::make_pair("P0F4", std::to_string(SystemUtils::Types::VOLUME_UP)));
-    Config::Write(std::make_pair("P0F8", std::to_string(SystemUtils::Types::VOLUME_DOWN)));
-
+    Config::init();
+    Config::loadConfig();
     std::string port = "COM6";
     unsigned long baud = 115200;
 
-    serial::Serial mySerial(port, baud, serial::Timeout::simpleTimeout(1000));
-
-    
-    std::cout << "Connecting to " << "port: " << port << " at speed: " << baud << " ..." << std::endl;
-    try
-    {
-        mySerial.isOpen();
-    } catch (serial::IOException& e) {
-        std::cerr << "Failed to open port: " << port << std::endl;
-        std::cerr << "Detalis: " << e.what() << std::endl;
-        return -1;
-    }
-
-    std::vector<std::pair<std::string, std::string>> cfg = Config::Get();
-    
     while (true)
     {
-        if (mySerial.available())
+        serial::Serial mySerial;
+    
+        try
         {
-            std::string data = mySerial.readline();
+            std::cout << "Connecting to " << "port: " << port << " at speed: " << baud << " ..." << std::endl;
 
-            std::cout << "Received data: " << data << std::endl;
+            mySerial.setPort(port);
+            mySerial.setBaudrate(baud);
+            auto timeout = serial::Timeout::simpleTimeout(1000);
+            mySerial.setTimeout(timeout);
+            mySerial.open();
+        } 
+        catch (serial::IOException& e) 
+        {
+            std::cerr << "Connection failed! " << std::endl;
+            std::cerr << "Detalis: " << e.what() << std::endl;
+            std::cerr << "Retrying in 2s..." << std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            continue;
+        }
+        catch (std::invalid_argument& e)
+        {
+            std::cerr << "Invalid arguments (wrong baudrate or port)!" << std::endl;
+            break;
+        }
 
-            for (auto &&i : cfg)
+        std::cout << "Connected!" << std::endl;
+        
+        while (mySerial.isOpen())
+        {
+            try
             {
-                if (i.first == data.substr(0, 4))
+                if (mySerial.available())
                 {
-                    if (i.second == std::to_string(SystemUtils::Types::MEDIA_PREVIOUS))
+                    std::string data = mySerial.readline().substr(0, 4);
+
+                    std::cout << "Received data: " << data << std::endl;
+
+                    if (!data.empty())
                     {
-                        std::cout << "Executing SystemUtils::mediaPrevious();" << std::endl;
-                        SystemUtils::mediaPrevious();
-                    }
-                    else if (i.second == std::to_string(SystemUtils::Types::MEDIA_PLAYPAUSE))
-                    {
-                        std::cout << "Executing SystemUtils::mediaPlayPause();" << std::endl;
-                        SystemUtils::mediaPlayPause();
-                    }
-                    else if (i.second == std::to_string(SystemUtils::Types::MEDIA_NEXT))
-                    {
-                        std::cout << "Executing SystemUtils::mediaNext();" << std::endl;
-                        SystemUtils::mediaNext();
-                    }
-                    else if (i.second == std::to_string(SystemUtils::Types::VOLUME_UP))
-                    {
-                        std::cout << "Executing SystemUtils::volumeUp();" << std::endl;
-                        SystemUtils::volumeUp();
-                    }
-                    else if (i.second == std::to_string(SystemUtils::Types::VOLUME_DOWN))
-                    {
-                        std::cout << "Executing SystemUtils::volumeDown();" << std::endl;
-                        SystemUtils::volumeDown();
+                        Actions::execute(data);
                     }
                 }
+            }
+            catch (serial::SerialException& e)
+            {
+                std::cerr << "Device disconnected!" << std::endl;
+                break;
+            }
+            catch (serial::IOException& e)
+            {
+                std::cerr << "IO Error during read!" << std::endl;
+                break; 
             }
         }
     }
