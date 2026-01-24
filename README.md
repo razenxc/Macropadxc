@@ -1,6 +1,6 @@
 # 💻 CLIENT (aka User-Mode Driver)
 
-## Requirements for linux: 
+Requirements for linux: 
 - Tested on Debian 13 + KDE Plasma + Wayland
 - - `sudo apt install playerctl pulseaudio-utils xdg-utils`
 
