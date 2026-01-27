@@ -1,12 +1,15 @@
 # 💻 CLIENT (aka User-Mode Driver)
 
 ## Requirements for linux: 
-- Tested on Debian 13 + KDE Plasma + Wayland
-- - `sudo apt install playerctl pulseaudio-utils xdg-utils`
+Tested on Debian 13 + KDE Plasma + Wayland
+- `sudo apt install playerctl pulseaudio-utils xdg-utils`
 
 ---
 
-### Dependencies: CMake, C++ Compiler, Python (for build script)
+## Dependencies: 
+- CMake 
+- C++ Compiler
+- Python (for build script)
 
 ## Build:
   
@@ -14,11 +17,19 @@
   python3 build.py
   ```
 
+## Third-Party:
+- [wjwwood/serial](https://github.com/wjwwood/serial.git)
+
+---
+---
+---
+
 # 🎛️FIRMWARE
 
-Dependenices: PlatformIO
+## Dependenices: 
+- PlatformIO
 
-Hardware: Espressif ESP-32 and 8x2 push buttons connected to individual pins.
+### Hardware: Espressif ESP-32 and 8x2 push buttons connected to individual pins.
 
 ## Pinout
 

@@ -12,7 +12,7 @@ int main()
 {
     Config::init();
     Config::loadConfig();
-    std::string port = "COM6";
+    std::string port = "/dev/ttyUSB0";
     unsigned long baud = 115200;
 
     while (true)
