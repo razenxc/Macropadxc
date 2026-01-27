@@ -1,22 +1,17 @@
 # 💻 CLIENT (aka User-Mode Driver)
 
-Requirements for linux: 
+## Requirements for linux: 
 - Tested on Debian 13 + KDE Plasma + Wayland
 - - `sudo apt install playerctl pulseaudio-utils xdg-utils`
 
-Dependencies: CMake, C++ Compiler
+---
 
-- Windows: `./build.bat`
+### Dependencies: CMake, C++ Compiler, Python (for build script)
 
-- Linux: `./build.sh`
-  
-  ## Or
+## Build:
   
   ```
-  mkdir build
-  cd build
-  cmake ..
-  cmake --Build .
+  python3 build.py
   ```
 
 # 🎛️FIRMWARE
