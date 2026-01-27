@@ -1,4 +1,4 @@
-# 💻 CLIENT (aka User-Mode Driver)
+# [💻 CLIENT (aka User-Mode Driver)](Client)
 
 ## Requirements for linux: 
 Tested on Debian 13 + KDE Plasma + Wayland
@@ -24,7 +24,7 @@ Tested on Debian 13 + KDE Plasma + Wayland
 ---
 ---
 
-# 🎛️FIRMWARE
+# [🎛️FIRMWARE](Firmware)
 
 ## Dependenices: 
 - PlatformIO
