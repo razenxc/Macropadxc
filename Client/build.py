@@ -10,9 +10,6 @@ if build_dir.exists():
     shutil.rmtree(build_dir) 
 build_dir.mkdir()
 
-if platform.system() == "Windows":
-    shutil.copyfile(root/"dlls/msys-2.0.dll", build_dir/"msys-2.0.dll")
-
 subprocess.run([
     "cmake",
     "-S", str(root),
