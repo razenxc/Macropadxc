@@ -1,24 +1,28 @@
 # [💻 CLIENT (aka User-Mode Driver)](Client)
 
-## Requirements for linux: 
+## 🐧 Requirements for linux
 Tested on Debian 13 + KDE Plasma + Wayland
 - `sudo apt install playerctl pulseaudio-utils xdg-utils`
 
 ---
 
-## Dependencies: 
+## 🧰 Dependencies
 - CMake 
 - C++ Compiler
 - Python (for build script)
 
-## Build:
-  
-  ```
+## 🛠️ Build
+### 🐧 Linux
+  ```py
   python3 build.py
   ```
+### 🪟 Windows
+  ```py
+  py build.py
+  ```
 
-## Configuration example:
-```
+## ⚙️ Configuration example
+```json
 [
   "P0F1": {
     "type: "CMD_MEDIA_NEXT",
@@ -31,7 +35,7 @@ Tested on Debian 13 + KDE Plasma + Wayland
 ]
 ```
 
-## Third-Party:
+## 📚 Third-Party
 - [wjwwood/serial](https://github.com/wjwwood/serial.git)
 - [nlohmann/json](https://github.com/nlohmann/json)
 
@@ -41,12 +45,12 @@ Tested on Debian 13 + KDE Plasma + Wayland
 
 # [🎛️FIRMWARE](Firmware)
 
-## Dependenices: 
+## 🧰 Dependenices
 - PlatformIO
 
-### Hardware: Espressif ESP-32 and 8x2 push buttons connected to individual pins.
+### 📟 Hardware: Espressif ESP-32 and 8x2 push buttons connected to individual pins.
 
-## Pinout
+## 🔌 Pinout
 
 ```
 0 - gnd 
@@ -60,7 +64,7 @@ Tested on Debian 13 + KDE Plasma + Wayland
 8 - f8 d32 
 ```
 
-## Protocol Describing
+## 📲 Protocol Describing
 
 1. Button pressed
    `P<page number>F<button number>`
@@ -73,3 +77,4 @@ Tested on Debian 13 + KDE Plasma + Wayland
 - - `P3F8`
 
 - Maximum 9 Pages (for simplification).
+
