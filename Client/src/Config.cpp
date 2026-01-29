@@ -16,8 +16,20 @@ void Config::init()
     {
         return;
     }
-    
 
+    std::ofstream file("config.json");
+
+    nlohmann::json data;
+
+    for (size_t i = 0; i < 10; i++)
+    {
+        for (size_t j = 1; j < 9; j++)
+        {
+            data["P" + std::to_string(i) + "F" + std::to_string(j)] = { {"type", ""}, {"payload", ""} };
+        }
+    }
+
+    file << std::setw(4) << data << std::endl;
 }
 
 void Config::Write(std::pair<std::string, std::string> keyvalue)

@@ -25,12 +25,12 @@ Tested on Debian 13 + KDE Plasma + Wayland
 ```json
 [
   "P0F1": {
-    "type: "CMD_MEDIA_NEXT",
-    "payload: "",
+    "type": "CMD_MEDIA_NEXT",
+    "payload": "",
   },
   "P0F2": {
-    "type: "CMD_OPEN_URL",
-    "payload: "https://github.com/razenxc",
+    "type": "CMD_OPEN_URL",
+    "payload": "https://github.com/razenxc",
   }
 ]
 ```

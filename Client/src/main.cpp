@@ -11,7 +11,7 @@
 int main()
 {
     Config::init();
-    Config::loadConfig();
+    // Config::loadConfig();
     std::string port = "/dev/ttyUSB0";
     unsigned long baud = 115200;
 
