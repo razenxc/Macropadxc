@@ -1,3 +1,6 @@
 [submodule "Client/thirdparty/serial"]
 	path = Client/thirdparty/serial
 	url = https://github.com/wjwwood/serial.git
+[submodule "Client/thirdparty/json"]
+	path = Client/thirdparty/json
+	url = https://github.com/nlohmann/json
