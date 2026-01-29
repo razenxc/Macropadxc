@@ -3,7 +3,7 @@ set(THE_SOURCES
     SystemUtils.h 
     Config.h Config.cpp 
     Utils.h Utils.cpp 
-    Actions.h Actions.cpp 
+    Actions.h Actions.cpp
 )
 
 if(WIN32 OR MINGW OR MSYS OR CYGWIN)
@@ -17,3 +17,4 @@ add_executable(WareInteractionClient ${THE_SOURCES})
 
 target_include_directories(WareInteractionClient PRIVATE .)
 target_link_libraries(WareInteractionClient PRIVATE serial_lib)
+target_link_libraries(WareInteractionClient PRIVATE nlohmann_json::nlohmann_json)

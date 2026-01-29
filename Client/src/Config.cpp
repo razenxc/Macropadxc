@@ -4,31 +4,20 @@
 #include <fstream>
 #include <iostream>
 #include <filesystem>
+#include <nlohmann/json.hpp>
 
 std::map<std::string, Action> Config::keyBindings;
 
 void Config::init()
 {
-    std::string cfgFileName = "config.wcfg";
+    std::string cfgFileName = "config.json";
 
     if (std::filesystem::is_regular_file(cfgFileName))
     {
         return;
     }
-
-    std::ofstream cfg;
-    cfg.open(cfgFileName);
-
-    for (size_t i = 0; i < 10; i++)
-    {
-        for (size_t j = 1; j < 9; j++)
-        {
-            cfg << "P" << i << "F" << j << "|" << '\n';
-        }
-        
-    }
     
-    cfg.close();
+
 }
 
 void Config::Write(std::pair<std::string, std::string> keyvalue)

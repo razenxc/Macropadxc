@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 
+# ===== SERIAL LIBRARY =====
 set(SERIAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/serial")
 
 if(NOT EXISTS "${SERIAL_DIR}/include/serial/serial.h")
@@ -34,4 +35,15 @@ if(NOT (WIN32 OR MINGW OR MSYS OR CYGWIN))
     target_link_libraries(serial_lib rt pthread)
 endif()
 
+# ===== JSON LIBRARY =====
+set(JSON_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/json")
+
+if(NOT EXISTS "${JSON_DIR}/include/nlohmann/json.hpp")
+    message(FATAL_ERROR ">>> Json submodule not found! Run: git submodule update --init --recursive <<<")
+endif()
+
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+add_subdirectory(${JSON_DIR})
+
+# ===== CLIENT =====
 add_subdirectory(src)

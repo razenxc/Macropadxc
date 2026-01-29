@@ -17,8 +17,23 @@ Tested on Debian 13 + KDE Plasma + Wayland
   python3 build.py
   ```
 
+## Configuration example:
+```
+[
+  "P0F1": {
+    "type: "CMD_MEDIA_NEXT",
+    "payload: "",
+  },
+  "P0F2": {
+    "type: "CMD_OPEN_URL",
+    "payload: "https://github.com/razenxc",
+  }
+]
+```
+
 ## Third-Party:
 - [wjwwood/serial](https://github.com/wjwwood/serial.git)
+- [nlohmann/json](https://github.com/nlohmann/json)
 
 ---
 ---
