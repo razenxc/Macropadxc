@@ -6,20 +6,23 @@
 #include <filesystem>
 #include <nlohmann/json.hpp>
 
+using namespace nlohmann;
+
 std::map<std::string, Action> Config::keyBindings;
+std::string cfgFilename = "config.json";
 
 void Config::init()
 {
-    std::string cfgFileName = "config.json";
+    std::string cfgFileName = cfgFilename;
 
     if (std::filesystem::is_regular_file(cfgFileName))
     {
         return;
     }
 
-    std::ofstream file("config.json");
+    std::ofstream file(cfgFilename);
 
-    nlohmann::json data;
+    json data;
 
     for (size_t i = 0; i < 10; i++)
     {
@@ -32,79 +35,75 @@ void Config::init()
     file << std::setw(4) << data << std::endl;
 }
 
-void Config::Write(std::pair<std::string, std::string> keyvalue)
+void Config::write(std::pair<std::string, Action> keyAction)
 {
-    std::ifstream inFile("config.wcfg");
-    std::vector<std::string> buffer;
-    std::string line;
+    std::ifstream f(cfgFilename);
+    json data;
 
-    if (inFile.is_open())
-    {
-        while (std::getline(inFile, line)) 
-        {
-            std::vector<std::string> data = Utils::Split(line, '|'); 
-
-            if (!data.empty() && data[0] == keyvalue.first)
-            {
-                std::string newLine = keyvalue.first + "|" + keyvalue.second;
-                buffer.push_back(newLine);
-            }
-            else
-            {
-                buffer.push_back(line);
-            }
-        }
-        inFile.close();
+    try {
+        data = json::parse(f);
+    } catch (const json::parse_error& e) {
+        std::cerr << "[Config::init()]JSON Parse Error: " << e.what() << std::endl;
+        return;
     }
+    
+    f.close();
+    data[keyAction.first]["type"] = keyAction.second.type;
+    data[keyAction.first]["payload"] = keyAction.second.payload;
 
-    std::ofstream outFile("config.wcfg");
-    if (outFile.is_open())
-    {
-        for (const auto& str : buffer)
-        {
-            outFile << str << '\n';
-        }
-        outFile.close();
-    }
-}
-
-std::vector<std::pair<std::string, std::string>> Config::Get()
-{
-    std::vector<std::pair<std::string, std::string>> buffer;
-    std::ifstream outFile("config.wcfg");
-    std::string line;
-
-    if (outFile.is_open())
-    {
-        while (std::getline(outFile, line)) 
-        {
-            if (line.empty()) continue;
-
-            std::vector<std::string> split = Utils::Split(line, '|');
-            
-            if (split.size() >= 2)
-            {
-                buffer.push_back(std::make_pair(split[0], split[1]));
-            }
-            else if (split.size() == 1)
-            {
-                buffer.push_back(std::make_pair(split[0], ""));
-            }
-        }
-        outFile.close();
-    }
-
-    return buffer;
+    std::ofstream ff(cfgFilename);
+    ff << std::setw(4) << data << std::endl;
 }
 
 void Config::loadConfig() 
 {
-    keyBindings["P0F1"] = { CMD_MEDIA_PREV, "" };
-    keyBindings["P0F2"] = { CMD_MEDIA_PLAY_PAUSE, "" };
-    keyBindings["P0F3"] = { CMD_MEDIA_NEXT, "" };
-    keyBindings["P0F4"] = { CMD_VOLUME_UP, "" };
-    keyBindings["P0F5"] = { CMD_OPEN_URL, "http://192.168.0.10" };
-    keyBindings["P0F6"] = { CMD_RUN_APP, "notepad.exe" };
-    keyBindings["P0F7"] = { CMD_VOLUME_MUTE, "" };
-    keyBindings["P0F8"] = { CMD_VOLUME_DOWN, "" };
+    // Mock config
+    Config::write({"P0F1", {CMD_MEDIA_PREV, ""}});
+    Config::write({"P0F2", {CMD_MEDIA_PLAY_PAUSE, ""}});
+    Config::write({"P0F3", {CMD_MEDIA_NEXT, ""}});
+    Config::write({"P0F4", {CMD_VOLUME_UP, ""}});
+    Config::write({"P0F5", {CMD_OPEN_URL, "http://192.168.0.10"}});
+    Config::write({"P0F6", {CMD_RUN_APP, "notepad.exe"}});
+    Config::write({"P0F7", {CMD_VOLUME_MUTE, ""}});
+    Config::write({"P0F8", {CMD_VOLUME_DOWN, ""}});
+
+    // Function implementation
+    std::ifstream file(cfgFilename);
+    if (!file.is_open()) return;
+
+    json data;
+    try {
+        file >> data;
+    } catch (const json::parse_error& e) {
+        std::cerr << "[Config::loadConfig()] JSON Corrupted: " << e.what() << std::endl;
+        return;
+    }
+
+    keyBindings.clear();
+
+    for (auto it = data.begin(); it != data.end(); it++) 
+    {
+        std::string key = it.key();
+        json value = it.value();
+
+        try {
+            int typeInt = 0;
+
+            if (value["type"].is_number()) {
+                typeInt = value["type"];
+            } else {
+                continue;
+            }
+            
+            std::string payload = "";
+            if (value.contains("payload")) {
+                payload = value["payload"];
+            }
+
+            keyBindings[key] = { (ActionType)typeInt, payload };
+        }
+        catch (const std::exception& e) {
+            std::cerr << "[Config::loadConfig()] Error loading " << key << ": " << e.what() << std::endl;
+        }
+    }
 }
