@@ -32,6 +32,15 @@ void Config::init()
         }
     }
 
+    data["P0F1"] = { {"type", CMD_MEDIA_PREV},       {"payload", ""} };
+    data["P0F2"] = { {"type", CMD_MEDIA_PLAY_PAUSE}, {"payload", ""} };
+    data["P0F3"] = { {"type", CMD_MEDIA_NEXT},       {"payload", ""} };
+    data["P0F4"] = { {"type", CMD_VOLUME_UP},        {"payload", ""} };
+    data["P0F5"] = { {"type", CMD_OPEN_URL},         {"payload", "https://google.com"} };
+    data["P0F6"] = { {"type", CMD_RUN_APP},          {"payload", "notepad.exe"} };
+    data["P0F7"] = { {"type", CMD_VOLUME_MUTE},      {"payload", ""} };
+    data["P0F8"] = { {"type", CMD_VOLUME_DOWN},      {"payload", ""} };
+
     file << std::setw(4) << data << std::endl;
 }
 
@@ -40,9 +49,12 @@ void Config::write(std::pair<std::string, Action> keyAction)
     std::ifstream f(cfgFilename);
     json data;
 
-    try {
+    try 
+    {
         data = json::parse(f);
-    } catch (const json::parse_error& e) {
+    }
+    catch (const json::parse_error& e) 
+    {
         std::cerr << "[Config::init()]JSON Parse Error: " << e.what() << std::endl;
         return;
     }
@@ -57,24 +69,17 @@ void Config::write(std::pair<std::string, Action> keyAction)
 
 void Config::loadConfig() 
 {
-    // Mock config
-    Config::write({"P0F1", {CMD_MEDIA_PREV, ""}});
-    Config::write({"P0F2", {CMD_MEDIA_PLAY_PAUSE, ""}});
-    Config::write({"P0F3", {CMD_MEDIA_NEXT, ""}});
-    Config::write({"P0F4", {CMD_VOLUME_UP, ""}});
-    Config::write({"P0F5", {CMD_OPEN_URL, "http://192.168.0.10"}});
-    Config::write({"P0F6", {CMD_RUN_APP, "notepad.exe"}});
-    Config::write({"P0F7", {CMD_VOLUME_MUTE, ""}});
-    Config::write({"P0F8", {CMD_VOLUME_DOWN, ""}});
-
     // Function implementation
     std::ifstream file(cfgFilename);
     if (!file.is_open()) return;
 
     json data;
-    try {
+    try 
+    {
         file >> data;
-    } catch (const json::parse_error& e) {
+    }
+    catch (const json::parse_error& e) 
+    {
         std::cerr << "[Config::loadConfig()] JSON Corrupted: " << e.what() << std::endl;
         return;
     }
@@ -86,23 +91,29 @@ void Config::loadConfig()
         std::string key = it.key();
         json value = it.value();
 
-        try {
+        try 
+        {
             int typeInt = 0;
 
-            if (value["type"].is_number()) {
+            if (value["type"].is_number()) 
+            {
                 typeInt = value["type"];
-            } else {
+            } 
+            else 
+            {
                 continue;
             }
             
             std::string payload = "";
-            if (value.contains("payload")) {
+            if (value.contains("payload")) 
+            {
                 payload = value["payload"];
             }
 
             keyBindings[key] = { (ActionType)typeInt, payload };
         }
-        catch (const std::exception& e) {
+        catch (const std::exception& e) 
+        {
             std::cerr << "[Config::loadConfig()] Error loading " << key << ": " << e.what() << std::endl;
         }
     }
