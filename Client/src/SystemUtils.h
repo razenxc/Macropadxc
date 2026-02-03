@@ -12,4 +12,6 @@ namespace SystemUtils
     void volumeMute();
     void openUrl(const std::string& url);
     void runApplication(const std::string& path);
+
+    std::string getExecutableDir();
 }

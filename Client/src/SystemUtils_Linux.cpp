@@ -44,4 +44,8 @@ namespace SystemUtils
     void runApplication(const std::string& path)
     {
     }
+
+    std::string getExecutableDir()
+    {
+    }
 }

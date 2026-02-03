@@ -1,5 +1,6 @@
 #include "Config.h"
 #include "Utils.h"
+#include "SystemUtils.h"
 
 #include <fstream>
 #include <iostream>
@@ -9,7 +10,7 @@
 using namespace nlohmann;
 
 std::map<std::string, Action> Config::keyBindings;
-std::string cfgFilename = "config.json";
+std::string cfgFilename = SystemUtils::getExecutableDir() + "/" + "config.json";
 
 void Config::init()
 {

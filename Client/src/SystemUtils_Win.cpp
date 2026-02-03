@@ -43,4 +43,20 @@ namespace SystemUtils
     {
         ShellExecuteA(0, "open", path.c_str(), 0, 0, SW_SHOWNORMAL);
     }
+
+    std::string getExecutableDir()
+    {
+        char buffer[MAX_PATH];
+        GetModuleFileNameA(NULL, buffer, MAX_PATH);
+
+        std::string fullPath(buffer);
+        size_t lastSlash = fullPath.find_last_of("\\/");
+        
+        if (std::string::npos != lastSlash)
+        {
+            return fullPath.substr(0, lastSlash);
+        }
+        
+        return "";
+    }
 }
