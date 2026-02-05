@@ -10,7 +10,7 @@ namespace Actions
     {
         if (Config::keyBindings.find(buttonCode) == Config::keyBindings.end())
         {
-            std::cout << "Actions > Unbound button: " << buttonCode << std::endl;
+            std::cout << "[Status][Actions::execute()] Unbound button: " << buttonCode << std::endl;
             return;
         }
 
@@ -22,35 +22,35 @@ namespace Actions
                 break;
             case CMD_MEDIA_PREV:
                 SystemUtils::mediaPrevious();
-                std::cout << "Actions > Executed SystemUtils::mediaPrevious();" << std::endl;
+                std::cout << "[Status][Actions::execute()] Executed SystemUtils::mediaPrevious();" << std::endl;
                 break;
             case CMD_MEDIA_PLAY_PAUSE:
                 SystemUtils::mediaPlayPause();
-                std::cout << "Actions > Executed SystemUtils::mediaPlayPause();" << std::endl;
+                std::cout << "[Status][Actions::execute()] Executed SystemUtils::mediaPlayPause();" << std::endl;
                 break;
             case CMD_MEDIA_NEXT:
                 SystemUtils::mediaNext();
-                std::cout << "Actions > Executed SystemUtils::mediaNext();" << std::endl;
+                std::cout << "[Status][Actions::execute()] Executed SystemUtils::mediaNext();" << std::endl;
                 break;
             case CMD_VOLUME_UP:
                 SystemUtils::volumeUp();
-                std::cout << "Actions > Executed SystemUtils::volumeUp();" << std::endl;
+                std::cout << "[Status][Actions::execute()] Executed SystemUtils::volumeUp();" << std::endl;
                 break;
             case CMD_VOLUME_DOWN:
                 SystemUtils::volumeDown();
-                std::cout << "Actions > Executed SystemUtils::volumeDown();" << std::endl;
+                std::cout << "[Status][Actions::execute()] Executed SystemUtils::volumeDown();" << std::endl;
                 break;
             case CMD_VOLUME_MUTE:
                 SystemUtils::volumeMute();
-                std::cout << "Actions > Executed SystemUtils::volumeMute();" << std::endl;
+                std::cout << "[Status][Actions::execute()] Executed SystemUtils::volumeMute();" << std::endl;
                 break;
             case CMD_OPEN_URL:
                 SystemUtils::openUrl(action.payload);
-                std::cout << "Actions > Executed SystemUtils::openUrl(action.payload);" << "Payload: " << action.payload << std::endl;
+                std::cout << "[Status][Actions::execute()] Executed SystemUtils::openUrl(action.payload);" << "Payload: " << action.payload << std::endl;
                 break;
             case CMD_RUN_APP:
                 SystemUtils::runApplication(action.payload);
-                std::cout << "Actions > Executed SystemUtils::runAppllicaton(action.payload);" << "Payload: " << action.payload << std::endl;
+                std::cout << "[Status][Actions::execute()] Executed SystemUtils::runAppllicaton(action.payload);" << "Payload: " << action.payload << std::endl;
                 break;
         }
     }

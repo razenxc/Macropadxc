@@ -5,7 +5,6 @@
 
 #include "SystemUtils.h"
 #include "Config.h"
-#include "Utils.h"
 #include "Actions.h"
 
 int main()
@@ -22,7 +21,7 @@ int main()
     
         try
         {
-            std::cout << "Connecting to " << "port: " << port << " at speed: " << baud << " ..." << std::endl;
+            std::cout << "[Status][main()] Connecting to " << "port: " << port << " at speed: " << baud << " ..." << std::endl;
 
             mySerial.setPort(port);
             mySerial.setBaudrate(baud);
@@ -32,19 +31,19 @@ int main()
         } 
         catch (serial::IOException& e) 
         {
-            std::cerr << "Connection failed! " << std::endl;
-            std::cerr << "Detalis: " << e.what() << std::endl;
-            std::cerr << "Retrying in 2s..." << std::endl;
+            std::cerr << "[Error][main()] Connection failed! " << std::endl;
+            std::cerr << "[Error][main()] Detalis: " << e.what() << std::endl;
+            std::cerr << "[Error][main()] Retrying in 2s..." << std::endl;
             std::this_thread::sleep_for(std::chrono::milliseconds(2000));
             continue;
         }
         catch (std::invalid_argument& e)
         {
-            std::cerr << "Invalid arguments (wrong baudrate or port)!" << std::endl;
+            std::cerr << "[Error][main()] Invalid arguments (wrong baudrate or port)!" << std::endl;
             break;
         }
 
-        std::cout << "Connected!" << std::endl;
+        std::cout << "[Status][main()] Connected!" << std::endl;
         
         while (mySerial.isOpen())
         {
@@ -54,7 +53,7 @@ int main()
                 {
                     std::string data = mySerial.readline().substr(0, 4);
 
-                    std::cout << "Received data: " << data << std::endl;
+                    std::cout << "[Status][main()] Received data: " << data << std::endl;
 
                     if (!data.empty())
                     {
@@ -65,12 +64,12 @@ int main()
             }
             catch (serial::SerialException& e)
             {
-                std::cerr << "Device disconnected!" << std::endl;
+                std::cerr << "[Error][main()] Device disconnected!" << std::endl;
                 break;
             }
             catch (serial::IOException& e)
             {
-                std::cerr << "IO Error during read!" << std::endl;
+                std::cerr << "[Error][main()] IO Error during read!" << std::endl;
                 break;
             }
         }

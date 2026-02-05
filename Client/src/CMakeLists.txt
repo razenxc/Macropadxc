@@ -1,8 +1,7 @@
 set(THE_SOURCES
     main.cpp 
     SystemUtils.h 
-    Config.h Config.cpp 
-    Utils.h Utils.cpp 
+    Config.h Config.cpp
     Actions.h Actions.cpp
 )
 

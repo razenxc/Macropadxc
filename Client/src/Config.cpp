@@ -1,5 +1,4 @@
 #include "Config.h"
-#include "Utils.h"
 #include "SystemUtils.h"
 
 #include <fstream>
@@ -57,7 +56,7 @@ void Config::write(std::pair<std::string, Action> keyAction)
     }
     catch (const json::parse_error& e) 
     {
-        std::cerr << "[Error][Config::init()] JSON Parse Error: " << e.what() << std::endl;
+        std::cerr << "[Error][Config::write()] JSON Parse Error: " << e.what() << std::endl;
         return;
     }
     
