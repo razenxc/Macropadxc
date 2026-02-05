@@ -38,6 +38,8 @@ Tested on Debian 13 + KDE Plasma + Wayland
 ## 📚 Third-Party
 - [wjwwood/serial](https://github.com/wjwwood/serial.git)
 - [nlohmann/json](https://github.com/nlohmann/json)
+- [ocornut/imgui](https://github.com/ocornut/imgui)
+- [glfw/glfw](https://github.com/glfw/glfw)
 
 ---
 ---
