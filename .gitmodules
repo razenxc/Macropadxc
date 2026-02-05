@@ -4,3 +4,9 @@
 [submodule "Client/thirdparty/json"]
 	path = Client/thirdparty/json
 	url = https://github.com/nlohmann/json
+[submodule "Client/thirdparty/imgui"]
+	path = Client/thirdparty/imgui
+	url = https://github.com/ocornut/imgui.git
+[submodule "Client/thirdparty/glfw"]
+	path = Client/thirdparty/glfw
+	url = https://github.com/glfw/glfw.git

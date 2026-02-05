@@ -1,4 +1,4 @@
-# [💻 CLIENT (aka User-Mode Driver)](Client)
+# [💻 CLIENT](Client)
 
 ## 🐧 Requirements for linux
 Tested on Debian 13 + KDE Plasma + Wayland

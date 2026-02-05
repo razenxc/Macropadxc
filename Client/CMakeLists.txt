@@ -4,6 +4,7 @@ project(WareInteraction)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # ===== SERIAL LIBRARY =====
 set(SERIAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/serial")
@@ -45,5 +46,23 @@ endif()
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(${JSON_DIR})
 
-# ===== SERVICE =====
+# ===== IMGUI & GLFW =====
+set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
+set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
+add_subdirectory(thirdparty/glfw)
+
+set(IMGUI_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/imgui")
+add_library(imgui STATIC
+    ${IMGUI_DIR}/imgui.cpp
+    ${IMGUI_DIR}/imgui_draw.cpp
+    ${IMGUI_DIR}/imgui_tables.cpp
+    ${IMGUI_DIR}/imgui_widgets.cpp
+    ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
+    ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
+)
+target_include_directories(imgui PUBLIC ${IMGUI_DIR} ${IMGUI_DIR}/backends)
+target_link_libraries(imgui PUBLIC glfw)
+
+# ===== Service & Client =====
 add_subdirectory(service)
+add_subdirectory(client)

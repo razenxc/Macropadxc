@@ -12,8 +12,8 @@ else()
     list(APPEND THE_SOURCES SystemUtils_Linux.cpp)
 endif()
 
-add_executable(WareInteractionClient ${THE_SOURCES})
+add_executable(WareService ${THE_SOURCES})
 
-target_include_directories(WareInteractionClient PRIVATE .)
-target_link_libraries(WareInteractionClient PRIVATE serial_lib)
-target_link_libraries(WareInteractionClient PRIVATE nlohmann_json::nlohmann_json)
+target_include_directories(WareService PRIVATE .)
+target_link_libraries(WareService PRIVATE serial_lib)
+target_link_libraries(WareService PRIVATE nlohmann_json::nlohmann_json)
