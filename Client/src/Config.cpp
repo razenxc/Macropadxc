@@ -4,12 +4,13 @@
 
 #include <fstream>
 #include <iostream>
-#include <filesystem>
 #include <nlohmann/json.hpp>
 
 using namespace nlohmann;
 
 std::map<std::string, Action> Config::keyBindings;
+std::filesystem::file_time_type Config::_lastWriteTime;
+
 std::string cfgFilename = SystemUtils::getExecutableDir() + "/" + "config.json";
 
 void Config::init()
@@ -56,7 +57,7 @@ void Config::write(std::pair<std::string, Action> keyAction)
     }
     catch (const json::parse_error& e) 
     {
-        std::cerr << "[Config::init()]JSON Parse Error: " << e.what() << std::endl;
+        std::cerr << "[Error][Config::init()] JSON Parse Error: " << e.what() << std::endl;
         return;
     }
     
@@ -70,7 +71,11 @@ void Config::write(std::pair<std::string, Action> keyAction)
 
 void Config::loadConfig() 
 {
-    // Function implementation
+    if (std::filesystem::exists(cfgFilename)) 
+    {
+        _lastWriteTime = std::filesystem::last_write_time(cfgFilename);
+    }
+    
     std::ifstream file(cfgFilename);
     if (!file.is_open()) return;
 
@@ -81,7 +86,7 @@ void Config::loadConfig()
     }
     catch (const json::parse_error& e) 
     {
-        std::cerr << "[Config::loadConfig()] JSON Corrupted: " << e.what() << std::endl;
+        std::cerr << "[Error][Config::loadConfig()] JSON Corrupted: " << e.what() << std::endl;
         return;
     }
 
@@ -115,7 +120,19 @@ void Config::loadConfig()
         }
         catch (const std::exception& e) 
         {
-            std::cerr << "[Config::loadConfig()] Error loading " << key << ": " << e.what() << std::endl;
+            std::cerr << "[Error][Config::loadConfig()] Error loading " << key << ": " << e.what() << std::endl;
         }
+    }
+}
+
+void Config::hotReload()
+{
+    if (!std::filesystem::exists(cfgFilename)) return;
+
+    auto currentWriteTime = std::filesystem::last_write_time(cfgFilename);
+    if (currentWriteTime > _lastWriteTime)
+    {
+        std::cout << "[Status][Config::hotReload()] Change detected! Reloading..." << std::endl;
+        loadConfig();
     }
 }

@@ -13,7 +13,7 @@ int main()
     Config::init();
     Config::loadConfig();
     
-    std::string port = "COM6";
+    std::string port = "COM4";
     unsigned long baud = 115200;
 
     while (true)
@@ -58,6 +58,7 @@ int main()
 
                     if (!data.empty())
                     {
+                        Config::hotReload();
                         Actions::execute(data);
                     }
                 }
@@ -70,7 +71,7 @@ int main()
             catch (serial::IOException& e)
             {
                 std::cerr << "IO Error during read!" << std::endl;
-                break; 
+                break;
             }
         }
     }
