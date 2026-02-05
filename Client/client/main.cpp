@@ -40,36 +40,34 @@ int entryPoint()
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init();
 
 
     while (!glfwWindowShouldClose(window))
     {
+        glfwPollEvents();
+
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+
         ImGui::ShowDemoWindow();
 
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-
-        // ImGui::Begin("My First Tool", nullptr, ImGuiWindowFlags_MenuBar);
-        // if (ImGui::BeginMenuBar())
-        // {
-        //     if (ImGui::BeginMenu("File"))
-        //     {
-        //         if (ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
-        //         if (ImGui::MenuItem("Save", "Ctrl+S"))   { /* Do stuff */ }
-        //         if (ImGui::MenuItem("Close", "Ctrl+W"))  {  }
-        //         ImGui::EndMenu();
-        //     }
-        //     ImGui::EndMenuBar();
-        // }
-
         ImGui::Render();
+        glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+        {
+            GLFWwindow* backup_current_context = glfwGetCurrentContext();
+            ImGui::UpdatePlatformWindows();
+            ImGui::RenderPlatformWindowsDefault();
+            glfwMakeContextCurrent(backup_current_context);
+        }
+
+        glfwSwapBuffers(window);
     }
 
     ImGui_ImplOpenGL3_Shutdown();
