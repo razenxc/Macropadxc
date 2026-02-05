@@ -45,5 +45,5 @@ endif()
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(${JSON_DIR})
 
-# ===== CLIENT =====
-add_subdirectory(src)
+# ===== SERVICE =====
+add_subdirectory(service)
