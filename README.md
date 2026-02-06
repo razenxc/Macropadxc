@@ -39,8 +39,8 @@ Tested on Debian 13 + KDE Plasma + Wayland
 - [wjwwood/serial](https://github.com/wjwwood/serial.git)
 - [nlohmann/json](https://github.com/nlohmann/json)
 - [ocornut/imgui](https://github.com/ocornut/imgui)
+- [GLAD 1](https://glad.dav1d.de)
 - [glfw/glfw](https://github.com/glfw/glfw)
-
 ---
 ---
 ---

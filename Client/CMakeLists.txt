@@ -46,11 +46,19 @@ endif()
 set(JSON_BuildTests OFF CACHE INTERNAL "")
 add_subdirectory(${JSON_DIR})
 
-# ===== IMGUI & GLFW =====
+# ==== GLAD ====
+add_library(glad STATIC "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/src/glad.c")
+target_include_directories(glad PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/glad/include")
+if (UNIX AND NOT APPLE)
+    target_link_libraries(glad ${CMAKE_DL_LIBS})
+endif()
+
+# ===== GLFW =====
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 add_subdirectory(thirdparty/glfw)
 
+# ==== IMGUI =====
 set(IMGUI_DIR "${CMAKE_CURRENT_SOURCE_DIR}/thirdparty/imgui")
 add_library(imgui STATIC
     ${IMGUI_DIR}/imgui.cpp
@@ -59,7 +67,6 @@ add_library(imgui STATIC
     ${IMGUI_DIR}/imgui_widgets.cpp
     ${IMGUI_DIR}/backends/imgui_impl_glfw.cpp
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
-    ${IMGUI_DIR}/imgui_demo.cpp
 )
 target_include_directories(imgui PUBLIC ${IMGUI_DIR} ${IMGUI_DIR}/backends)
 target_link_libraries(imgui PUBLIC glfw)

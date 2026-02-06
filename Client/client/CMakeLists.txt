@@ -18,14 +18,12 @@ endif()
 target_include_directories(WareClient PRIVATE ../service)
 
 target_link_libraries(WareClient 
-    PRIVATE 
-    imgui 
+    PRIVATE
+    glad
     glfw 
+    imgui
     nlohmann_json::nlohmann_json
 )
 
-if(WIN32)
-    target_link_libraries(WareClient PRIVATE opengl32)
-else()
-    target_link_libraries(WareClient PRIVATE GL)
-endif()
+find_package(OpenGL REQUIRED)
+target_link_libraries(WareClient PRIVATE ${OPENGL_LIBRARIES})
