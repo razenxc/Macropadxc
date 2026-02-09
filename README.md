@@ -1,8 +1,13 @@
 # [💻 CLIENT](Client)
 
+## 🐧 The Linux configuration under which everything was developed and tested:
+### Debian 13 + KDE Plasma + Wayland
+
 ## 🐧 Requirements for linux
-Tested on Debian 13 + KDE Plasma + Wayland
 - `sudo apt install playerctl pulseaudio-utils xdg-utils`
+
+## 🪟 Requirements for windows
+- Microsoft Visual C++ Redistributable
 
 ---
 
@@ -10,6 +15,10 @@ Tested on Debian 13 + KDE Plasma + Wayland
 - CMake 
 - C++ Compiler
 - Python (for build script)
+
+## 🐧 Dependencies for linux
+- `sudo apt install libwayland-dev libxkbcommon-dev xorg-dev`
+- - More details: https://www.glfw.org/docs/latest/compile_guide.html#compile_deps_wayland
 
 ## 🛠️ Build
 ### 🐧 Linux

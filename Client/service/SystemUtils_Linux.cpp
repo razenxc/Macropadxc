@@ -47,5 +47,6 @@ namespace SystemUtils
 
     std::string getExecutableDir()
     {
+        return "";
     }
 }

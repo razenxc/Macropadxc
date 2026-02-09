@@ -14,6 +14,8 @@ endif()
 
 add_executable(WareService ${THE_SOURCES})
 
+target_link_options(WareService PRIVATE "-static")
+
 target_include_directories(WareService PRIVATE .)
 target_link_libraries(WareService PRIVATE serial_lib)
 target_link_libraries(WareService PRIVATE nlohmann_json::nlohmann_json)

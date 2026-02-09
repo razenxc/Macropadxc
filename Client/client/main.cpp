@@ -47,7 +47,7 @@ int entryPoint()
     glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
 
-    window = glfwCreateWindow(1, 1, "", NULL, NULL);
+    window = glfwCreateWindow(800, 600, "", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -56,7 +56,11 @@ int entryPoint()
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
-    glfwHideWindow(window);
+    
+    // doesn't work for Linux
+    #ifdef _WIN32
+        lfwHideWindow(window);
+    #endif
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         throw("Unable to context to OpenGL");
@@ -127,7 +131,7 @@ int entryPoint()
                 ImGui::SetNextItemWidth(250);
                 
                 char buffer[256];
-                strncpy_s(buffer, action.payload.c_str(), sizeof(buffer));
+                strncpy(buffer, action.payload.c_str(), sizeof(buffer));
                 buffer[sizeof(buffer)-1] = 0;
 
                 if (ImGui::InputText("##pay", buffer, sizeof(buffer)))
