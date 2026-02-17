@@ -59,7 +59,7 @@ int entryPoint()
     
     // doesn't work for Linux
     #ifdef _WIN32
-        lfwHideWindow(window);
+        glfwHideWindow(window);
     #endif
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))

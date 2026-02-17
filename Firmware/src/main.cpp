@@ -23,6 +23,17 @@ void setup()
 
 void loop()
 {
+  if (Serial.available() > 0)
+  {
+    String data = Serial.readStringUntil('\n');
+    data.trim();
+
+    if (data == "WAREI_HEY")
+    {
+      Serial.println("WAREI_OK");
+    }
+  }
+
   for (int i = 0; i < BUTTON_COUNT; i++)
   {
     int currentState = digitalRead(PINS[i]);

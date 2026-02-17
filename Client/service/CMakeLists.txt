@@ -14,6 +14,10 @@ endif()
 
 add_executable(WareService ${THE_SOURCES})
 
+if(WIN32 OR MINGW OR MSYS OR CYGWIN)
+    target_link_libraries(WareService PRIVATE setupapi)
+endif()
+
 target_link_options(WareService PRIVATE "-static")
 
 target_include_directories(WareService PRIVATE .)

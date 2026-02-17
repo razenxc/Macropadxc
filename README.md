@@ -1,36 +1,46 @@
 # [💻 CLIENT](Client)
 
 ## 🐧 The Linux configuration under which everything was developed and tested:
+
 ### Debian 13 + KDE Plasma + Wayland
 
 ## 🐧 Requirements for linux
+
 - `sudo apt install playerctl pulseaudio-utils xdg-utils`
 
 ## 🪟 Requirements for windows
+
 - Microsoft Visual C++ Redistributable
 
 ---
 
 ## 🧰 Dependencies
+
 - CMake 
 - C++ Compiler
 - Python (for build script)
 
 ## 🐧 Dependencies for linux
+
 - `sudo apt install libwayland-dev libxkbcommon-dev xorg-dev`
 - - More details: https://www.glfw.org/docs/latest/compile_guide.html#compile_deps_wayland
 
 ## 🛠️ Build
+
 ### 🐧 Linux
-  ```py
-  python3 build.py
-  ```
+
+```py
+python3 build.py
+```
+
 ### 🪟 Windows
-  ```py
-  py build.py
-  ```
+
+```py
+py build.py
+```
 
 ## ⚙️ Configuration example
+
 ```json
 [
   "P0F1": {
@@ -45,18 +55,23 @@
 ```
 
 ## 📚 Third-Party
+
 - [wjwwood/serial](https://github.com/wjwwood/serial.git)
 - [nlohmann/json](https://github.com/nlohmann/json)
 - [ocornut/imgui](https://github.com/ocornut/imgui)
 - [GLAD 1](https://glad.dav1d.de)
 - [glfw/glfw](https://github.com/glfw/glfw)
+
 ---
+
 ---
+
 ---
 
 # [🎛️FIRMWARE](Firmware)
 
 ## 🧰 Dependenices
+
 - PlatformIO
 
 ### 📟 Hardware: Espressif ESP-32 and 8x2 push buttons connected to individual pins.
@@ -75,17 +90,28 @@
 8 - f8 d32 
 ```
 
-## 📲 Protocol Describing
+### ⚡Baud speed 115200
 
-1. Button pressed
-   `P<page number>F<button number>`
+### 📲 Protocol Describing
+
+#### 1. Button pressed
+
+`P<page number>F<button number>`
+
 - Example Data:
-
-- - `P0F1`
-
-- - `P9F4`
-
-- - `P3F8`
+  
+  - TX `P0F1`
+  
+  - TX `P9F4`
+  
+  - TX `P3F8`
 
 - Maximum 9 Pages (for simplification).
 
+#### 2. Port auto-detection
+
+RX: `WAREI_HEY`
+
+TX: `WAREI_OK`
+
+---
