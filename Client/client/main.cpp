@@ -58,9 +58,9 @@ int entryPoint()
     glfwSwapInterval(1);
     
     // doesn't work for Linux
-    #ifdef _WIN32
-        glfwHideWindow(window);
-    #endif
+    // #ifdef _WIN32
+    //     glfwHideWindow(window);
+    // #endif
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         throw("Unable to context to OpenGL");
@@ -99,7 +99,7 @@ int entryPoint()
 
         ImGui::Separator();
 
-        const char* pages[] = { "Page 0", "Page 1", "Page 2", "Page 3", "Page 4", "Page 5", "Page 6", "Page 7", "Page 8", "Page 9" };
+        const char* pages[] = { "Page 1", "Page 2", "Page 3", "Page 4", "Page 5", "Page 6", "Page 7", "Page 8" };
         static int currentPage = 0;
         ImGui::Combo("Layer / Page", &currentPage, pages, IM_ARRAYSIZE(pages));
 
