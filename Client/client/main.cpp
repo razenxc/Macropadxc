@@ -44,6 +44,7 @@ int entryPoint()
 {
     if (!glfwInit()) return -1;
 
+    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
     glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
     glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
 
@@ -56,11 +57,6 @@ int entryPoint()
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
-    
-    // doesn't work for Linux
-    // #ifdef _WIN32
-    //     glfwHideWindow(window);
-    // #endif
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         throw("Unable to context to OpenGL");
@@ -71,6 +67,7 @@ int entryPoint()
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+    io.ConfigViewportsNoAutoMerge = true;
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init();
 
@@ -84,10 +81,12 @@ int entryPoint()
         ImGui::SetNextWindowSize(ImVec2(600, 300), ImGuiCond_Always);
 
         // ==== BEGIN =====
-        ImGui::Begin("Ware Client");
+        bool isOpen = true;
+
+        ImGui::Begin("Ware Client", &isOpen);
         Config::loadConfig();
-        
-        if (ImGui::Button("Exit"))
+
+        if (!isOpen)
         {
             break;
         }
