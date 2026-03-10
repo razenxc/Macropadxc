@@ -43,11 +43,11 @@ py build.py
 
 ```json
 [
-  "P0F1": {
+  "F1": {
     "type": "CMD_MEDIA_NEXT",
     "payload": "",
   },
-  "P0F2": {
+  "F2": {
     "type": "CMD_OPEN_URL",
     "payload": "https://github.com/razenxc",
   }
@@ -79,15 +79,15 @@ py build.py
 ## 🔌 Pinout
 
 ```
-0 - gnd 
-1 - f1 d13
-2 - f2 d12
-3 - f3 d14
-4 - f4 d27
-5 - f5 d26
-6 - f6 d25
-7 - f7 d33
-8 - f8 d32 
+0 - GND 
+1 - F1 D13
+2 - F2 D12
+3 - F3 D14
+4 - F4 D27
+5 - F5 D26
+6 - F6 D25
+7 - F7 D33
+8 - F8 D32 
 ```
 
 ### ⚡Baud speed 115200
@@ -96,17 +96,15 @@ py build.py
 
 #### 1. Button pressed
 
-`P<page number>F<button number>`
+`F<button number>`
 
 - Example Data:
   
-  - TX `P0F1`
+  - TX `F1`
   
-  - TX `P9F4`
+  - TX `F4`
   
-  - TX `P3F8`
-
-- Maximum 9 Pages (for simplification).
+  - TX `F8`
 
 #### 2. Port auto-detection
 

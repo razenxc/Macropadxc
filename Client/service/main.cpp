@@ -126,7 +126,7 @@ int main()
             {
                 if (mySerial.available())
                 {
-                    std::string data = mySerial.readline().substr(0, 4);
+                    std::string data = mySerial.readline().substr(0, 2);
 
                     std::cout << "[Status][main()] Received data: " << data << std::endl;
 

@@ -25,22 +25,19 @@ void Config::init()
 
     json data;
 
-    for (size_t i = 0; i < 10; i++)
+   for (size_t j = 1; j < 9; j++)
     {
-        for (size_t j = 1; j < 9; j++)
-        {
-            data["P" + std::to_string(i) + "F" + std::to_string(j)] = { {"type", ""}, {"payload", ""} };
-        }
+        data["F" + std::to_string(j)] = { {"type", ""}, {"payload", ""} };
     }
 
-    data["P0F1"] = { {"type", CMD_MEDIA_PREV},       {"payload", ""} };
-    data["P0F2"] = { {"type", CMD_MEDIA_PLAY_PAUSE}, {"payload", ""} };
-    data["P0F3"] = { {"type", CMD_MEDIA_NEXT},       {"payload", ""} };
-    data["P0F4"] = { {"type", CMD_VOLUME_UP},        {"payload", ""} };
-    data["P0F5"] = { {"type", CMD_OPEN_URL},         {"payload", "https://google.com"} };
-    data["P0F6"] = { {"type", CMD_RUN_APP},          {"payload", "notepad.exe"} };
-    data["P0F7"] = { {"type", CMD_VOLUME_MUTE},      {"payload", ""} };
-    data["P0F8"] = { {"type", CMD_VOLUME_DOWN},      {"payload", ""} };
+    data["F1"] = { {"type", CMD_MEDIA_PREV},       {"payload", ""} };
+    data["F2"] = { {"type", CMD_MEDIA_PLAY_PAUSE}, {"payload", ""} };
+    data["F3"] = { {"type", CMD_MEDIA_NEXT},       {"payload", ""} };
+    data["F4"] = { {"type", CMD_VOLUME_UP},        {"payload", ""} };
+    data["F5"] = { {"type", CMD_OPEN_URL},         {"payload", "https://google.com"} };
+    data["F6"] = { {"type", CMD_RUN_APP},          {"payload", "notepad.exe"} };
+    data["F7"] = { {"type", CMD_VOLUME_MUTE},      {"payload", ""} };
+    data["F8"] = { {"type", CMD_VOLUME_DOWN},      {"payload", ""} };
 
     file << std::setw(4) << data << std::endl;
 }

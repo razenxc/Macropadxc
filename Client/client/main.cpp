@@ -99,15 +99,9 @@ int entryPoint()
 
         ImGui::Separator();
 
-        const char* pages[] = { "Page 1", "Page 2", "Page 3", "Page 4", "Page 5", "Page 6", "Page 7", "Page 8" };
-        static int currentPage = 0;
-        ImGui::Combo("Layer / Page", &currentPage, pages, IM_ARRAYSIZE(pages));
-
-        ImGui::Separator();
-
         for (int i = 1; i <= 8; i++)
         {
-            std::string key = "P" + std::to_string(currentPage) + "F" + std::to_string(i);
+            std::string key = "F" + std::to_string(i);
 
             ImGui::PushID(key.c_str());
             ImGui::AlignTextToFramePadding();
