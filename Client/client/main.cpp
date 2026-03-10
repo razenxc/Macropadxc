@@ -71,6 +71,8 @@ int entryPoint()
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init();
 
+    Config::loadConfig();
+
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
@@ -84,7 +86,6 @@ int entryPoint()
         bool isOpen = true;
 
         ImGui::Begin("Ware Client", &isOpen);
-        Config::loadConfig();
 
         if (!isOpen)
         {

@@ -85,7 +85,8 @@ int main()
             if (!mySerial.isOpen())
             {
                 port = autoDetectPort();
-                if (port == "") {
+                if (port == "") 
+                {
                         std::cout << "[Status][main()] Device not found. Retrying in 3s..." << std::endl;
                         std::this_thread::sleep_for(std::chrono::seconds(3));
                         continue;
@@ -126,12 +127,12 @@ int main()
             {
                 if (mySerial.available())
                 {
-                    std::string data = mySerial.readline().substr(0, 2);
+                    std::string data = mySerial.readline();
 
-                    std::cout << "[Status][main()] Received data: " << data << std::endl;
-
-                    if (!data.empty())
+                    if (data.length() >= 2)
                     {
+                        data = data.substr(0, 2);
+                        std::cout << "[Status][main()] Received data: " << data << std::endl;
                         Config::hotReload();
                         Actions::execute(data);
                     }
