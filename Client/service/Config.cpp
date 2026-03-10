@@ -125,10 +125,17 @@ void Config::hotReload()
 {
     if (!std::filesystem::exists(cfgFilename)) return;
 
-    auto currentWriteTime = std::filesystem::last_write_time(cfgFilename);
-    if (currentWriteTime > _lastWriteTime)
+    try
     {
-        std::cout << "[Status][Config::hotReload()] Change detected! Reloading..." << std::endl;
-        loadConfig();
+        auto currentWriteTime = std::filesystem::last_write_time(cfgFilename);
+        if (currentWriteTime > _lastWriteTime)
+        {
+            std::cout << "[Status][Config::hotReload()] Change detected! Reloading..." << std::endl;
+            loadConfig();
+        }
+    }
+    catch (const std::filesystem::filesystem_error& e)
+    {
+        std::cerr << "[Warning][Config::hotReload()] Could not check file time (locked?): " << e.what() << std::endl;
     }
 }

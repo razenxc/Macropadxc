@@ -148,6 +148,14 @@ int main()
                 std::cerr << "[Error][main()] IO Error during read!" << std::endl;
                 break;
             }
+            catch (const std::exception& e) 
+            {
+                std::cerr << "[Error][main()] Exception: " << e.what() << std::endl;
+            }
+            catch (...) 
+            {
+                std::cerr << "[Error][main()] Unknown error!" << std::endl;
+            }
         }
     }
 
