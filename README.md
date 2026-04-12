@@ -74,7 +74,7 @@ py build.py
 
 - PlatformIO
 
-### 📟 Hardware: Raspberry Pi Pick (YD-RP2040); 9 push buttons connected to individual ports; 3D printed case;
+### 📟 Hardware: Raspberry Pi Pico (YD-RP2040); 9 push buttons connected to individual ports; 3D printed case;
 
 ## 🔌 Pinout
 
