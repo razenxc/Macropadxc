@@ -27,13 +27,15 @@ std::string autoDetectPort()
 
             if (mySerial.isOpen())
             {
-                // Waiting due to controller DTR reset
-                std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                mySerial.setDTR();  
+                mySerial.setRTS();
+
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
                 mySerial.flushInput();
                 mySerial.write("WAREI_HEY\n");
 
-                std::string data = mySerial.read(50);
+                std::string data = mySerial.readline(50, "\n");
 
                 if (data.find("WAREI_OK") != std::string::npos)
                 {

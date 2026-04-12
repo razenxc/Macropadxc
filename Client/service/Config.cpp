@@ -25,7 +25,7 @@ void Config::init()
 
     json data;
 
-   for (size_t j = 1; j < 9; j++)
+   for (size_t j = 1; j <= 9; j++)
     {
         data["F" + std::to_string(j)] = { {"type", ""}, {"payload", ""} };
     }
@@ -38,6 +38,7 @@ void Config::init()
     data["F6"] = { {"type", CMD_RUN_APP},          {"payload", "notepad.exe"} };
     data["F7"] = { {"type", CMD_VOLUME_MUTE},      {"payload", ""} };
     data["F8"] = { {"type", CMD_VOLUME_DOWN},      {"payload", ""} };
+    data["F9"] = { {"type", CMD_NONE},      {"payload", ""} };
 
     file << std::setw(4) << data << std::endl;
 }
