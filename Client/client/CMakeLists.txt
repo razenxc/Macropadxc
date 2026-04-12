@@ -2,14 +2,20 @@ set(SHARED_SOURCES
     ../service/Config.cpp
 )
 
+set(SOURCES
+    main.cpp cl_utils.h
+)
+
 if(WIN32 OR MINGW OR MSYS OR CYGWIN)
     list(APPEND SHARED_SOURCES ../service/SystemUtils_Win.cpp)
+    list(APPEND SOURCES cl_utils_win.cpp)
     add_definitions(-D_WIN32_WINNT=0x0600)
 else()
     list(APPEND SHARED_SOURCES ../service/SystemUtils_Linux.cpp)
+    list(APPEND SOURCES cl_utils_linux.cpp)
 endif()
 
-add_executable(WareClient main.cpp ${SHARED_SOURCES})
+add_executable(WareClient ${SOURCES} ${SHARED_SOURCES})
 
 if(WIN32 OR MINGW OR MSYS OR CYGWIN)
     set_target_properties(WareClient PROPERTIES WIN32_EXECUTABLE ON)

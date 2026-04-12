@@ -1,3 +1,5 @@
+#include <chrono>
+
 #define GLFW_INCLUDE_NONE
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -7,6 +9,7 @@
 
 #include "Actions.h"
 #include "Config.h"
+#include "cl_utils.h"
 
 int entryPoint();
 
@@ -73,9 +76,24 @@ int entryPoint()
 
     Config::loadConfig();
 
+    auto lastCheckTime = std::chrono::steady_clock::now();
+    bool isServiceRunning = true;
+    std::string serviceExeName = "WareService.exe"; 
+
+    #ifndef _WIN32
+        serviceExeName = "WareService";
+    #endif
+
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
+
+        auto now = std::chrono::steady_clock::now();
+        if (std::chrono::duration_cast<std::chrono::seconds>(now - lastCheckTime).count() >= 1)
+        {
+            isServiceRunning = isProcessRunning(serviceExeName);
+            lastCheckTime = now;
+        }
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -99,46 +117,55 @@ int entryPoint()
 
         ImGui::Separator();
 
-        for (int i = 1; i <= 9; i++)
+        if (!isServiceRunning)
         {
-            std::string key = "F" + std::to_string(i);
-
-            ImGui::PushID(key.c_str());
-            ImGui::AlignTextToFramePadding();
-            ImGui::Text("Button F%d:", i);
-            ImGui::SameLine();
-
-            Action& action = Config::keyBindings[key];
-
-            int currentType = (int)action.type;
-            ImGui::SetNextItemWidth(200);
-            
-            if (ImGui::Combo("##type", &currentType, uiActionNames, IM_ARRAYSIZE(uiActionNames)))
+            ImGui::TextColored(ImVec4(1.0f, 0.2f, 0.2f, 1.0f), "Background service (%s) is not running!", serviceExeName.c_str());
+            ImGui::TextDisabled("Key bindings are disabled. Please start the service to apply changes.");
+            ImGui::Separator();
+        }
+        else
+        {
+            for (int i = 1; i <= 9; i++)
             {
-                action.type = (ActionType)currentType;
-                Config::write({key, action});
-            }
+                std::string key = "F" + std::to_string(i);
 
-            if (action.type == CMD_OPEN_URL || action.type == CMD_RUN_APP)
-            {
+                ImGui::PushID(key.c_str());
+                ImGui::AlignTextToFramePadding();
+                ImGui::Text("Button F%d:", i);
                 ImGui::SameLine();
-                ImGui::SetNextItemWidth(250);
-                
-                char buffer[256];
-                strncpy(buffer, action.payload.c_str(), sizeof(buffer));
-                buffer[sizeof(buffer)-1] = 0;
 
-                if (ImGui::InputText("##pay", buffer, sizeof(buffer)))
+                Action& action = Config::keyBindings[key];
+
+                int currentType = (int)action.type;
+                ImGui::SetNextItemWidth(200);
+                
+                if (ImGui::Combo("##type", &currentType, uiActionNames, IM_ARRAYSIZE(uiActionNames)))
                 {
-                    action.payload = std::string(buffer);
+                    action.type = (ActionType)currentType;
                     Config::write({key, action});
                 }
 
-                if (ImGui::IsItemHovered())
-                    ImGui::SetTooltip(action.type == CMD_OPEN_URL ? "Example: https://youtube.com" : "Example: C:\\Windows\\notepad.exe");
-            }
+                if (action.type == CMD_OPEN_URL || action.type == CMD_RUN_APP)
+                {
+                    ImGui::SameLine();
+                    ImGui::SetNextItemWidth(250);
+                    
+                    char buffer[256];
+                    strncpy(buffer, action.payload.c_str(), sizeof(buffer));
+                    buffer[sizeof(buffer)-1] = 0;
 
-            ImGui::PopID();
+                    if (ImGui::InputText("##pay", buffer, sizeof(buffer)))
+                    {
+                        action.payload = std::string(buffer);
+                        Config::write({key, action});
+                    }
+
+                    if (ImGui::IsItemHovered())
+                        ImGui::SetTooltip(action.type == CMD_OPEN_URL ? "Example: https://youtube.com" : "Example: C:\\Windows\\notepad.exe");
+                }
+
+                ImGui::PopID();
+            }
         }
 
         ImGui::End();
