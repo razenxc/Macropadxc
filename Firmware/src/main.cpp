@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-const unsigned PINS[] = { 13, 12, 14, 27, 26, 25, 33, 32 };
-const unsigned short BUTTON_COUNT = 8;
+const unsigned PINS[] = { 15, 14, 13, 12, 11, 10, 9, 8, 7 };
+const unsigned short BUTTON_COUNT = 9;
 
 int lastButtonState[BUTTON_COUNT];
 
@@ -10,7 +10,16 @@ const unsigned long DEPRESS_DELAY = 50;
 
 void setup()
 {
+  pinMode(25, OUTPUT);
   Serial.begin(115200);
+  
+  digitalWrite(25, HIGH);
+  unsigned long startWait = millis();
+  while (!Serial && (millis() - startWait < 5000)) {
+    digitalWrite(25, (millis() / 100) % 2); 
+    delay(10);
+  }
+  digitalWrite(25, LOW);
 
   for (int i = 0; i < BUTTON_COUNT; i++) {
     pinMode(PINS[i], INPUT_PULLUP);
@@ -42,7 +51,8 @@ void loop()
       {
         if (currentState == LOW)
         {
-          Serial.printf("F%i\n", i+1);
+          Serial.print("F");
+          Serial.println(i + 1);
         }
 
         lastDepressTime[i] = millis();
