@@ -40,7 +40,8 @@ const char* uiActionNames[] = {
     "Volume: Down",         // 5
     "Volume: Mute",         // 6
     "Open Website (URI)",   // 7
-    "Run Application"       // 8
+    "Run Application",       // 8
+    "Press Keys (Combo)"    // 9
 };
 
 int entryPoint()
@@ -145,7 +146,7 @@ int entryPoint()
                     Config::write({key, action});
                 }
 
-                if (action.type == CMD_OPEN_URL || action.type == CMD_RUN_APP)
+                if (action.type == CMD_OPEN_URL || action.type == CMD_RUN_APP || action.type == CMD_PRESS_KEYS)
                 {
                     ImGui::SameLine();
                     ImGui::SetNextItemWidth(250);
@@ -161,9 +162,12 @@ int entryPoint()
                     }
 
                     if (ImGui::IsItemHovered())
-                        ImGui::SetTooltip(action.type == CMD_OPEN_URL ? "Example: https://youtube.com" : "Example: C:\\Windows\\notepad.exe");
+                    {
+                        if (action.type == CMD_OPEN_URL) ImGui::SetTooltip("Example: https://youtube.com");
+                        else if (action.type == CMD_RUN_APP) ImGui::SetTooltip("Example: notepad.exe");
+                        else if (action.type == CMD_PRESS_KEYS) ImGui::SetTooltip("Example: CTRL+C or WIN+D");
+                    }
                 }
-
                 ImGui::PopID();
             }
         }

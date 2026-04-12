@@ -52,6 +52,10 @@ namespace Actions
                 SystemUtils::runApplication(action.payload);
                 std::cout << "[Status][Actions::execute()] Executed SystemUtils::runAppllicaton(action.payload);" << "Payload: " << action.payload << std::endl;
                 break;
+            case CMD_PRESS_KEYS:
+                SystemUtils::simulateKeystrokes(action.payload);
+                std::cout << "[Status][Actions::execute()] Executed SystemUtils::simulateKeystrokes(action.payload);" << "Payload: " << action.payload << std::endl;
+                break;
         }
     }
 }

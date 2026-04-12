@@ -12,6 +12,7 @@ namespace SystemUtils
     void volumeMute();
     void openUrl(const std::string& url);
     void runApplication(const std::string& path);
+    void simulateKeystrokes(const std::string& keysCombo);
 
     std::string getExecutableDir();
 }

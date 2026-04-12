@@ -17,7 +17,8 @@ enum ActionType
     CMD_VOLUME_DOWN,
     CMD_VOLUME_MUTE,
     CMD_OPEN_URL,
-    CMD_RUN_APP
+    CMD_RUN_APP,
+    CMD_PRESS_KEYS
 };
 
 struct Action

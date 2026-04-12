@@ -45,6 +45,10 @@ namespace SystemUtils
     {
     }
 
+    void simulateKeystrokes(const std::string& keysCombo) 
+    {
+    }
+
     std::string getExecutableDir()
     {
         return "";
