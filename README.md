@@ -74,20 +74,21 @@ py build.py
 
 - PlatformIO
 
-### 📟 Hardware: Espressif ESP-32 and 8x2 push buttons connected to individual pins.
+### 📟 Hardware: Raspberry Pi Pick (YD-RP2040); 9 push buttons connected to individual ports; 3D printed case;
 
 ## 🔌 Pinout
 
 ```
-0 - GND 
-1 - F1 D13
-2 - F2 D12
-3 - F3 D14
-4 - F4 D27
-5 - F5 D26
-6 - F6 D25
-7 - F7 D33
-8 - F8 D32 
+0  - GND 
+F1 - 15
+F2 - 14
+F3 - 13
+F4 - 12
+F5 - 11
+F6 - 10
+F7 - 9
+F8 - 8
+F9 - 7
 ```
 
 ### ⚡Baud speed 115200
