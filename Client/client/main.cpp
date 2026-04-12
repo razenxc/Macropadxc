@@ -7,8 +7,8 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
-#include "Actions.h"
-#include "Config.h"
+#include "actions.h"
+#include "config.h"
 #include "cl_utils.h"
 
 int entryPoint();

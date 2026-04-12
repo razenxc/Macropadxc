@@ -3,9 +3,9 @@
 #include <chrono>
 #include <thread>
 
-#include "SystemUtils.h"
-#include "Config.h"
-#include "Actions.h"
+#include "sv_utils.h"
+#include "config.h"
+#include "actions.h"
 
 std::string autoDetectPort()
 {
