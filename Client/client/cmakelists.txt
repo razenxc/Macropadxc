@@ -1,5 +1,5 @@
 set(SHARED_SOURCES
-    ../service/Config.cpp
+    ../service/config.cpp
 )
 
 set(SOURCES

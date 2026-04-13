@@ -78,20 +78,20 @@ add_subdirectory(client)
 
 # ======
 # CPack
-install(TARGETS WareClient WareService DESTINATION bin)
+install(TARGETS WareClient WareService DESTINATION /opt/Macropadxc)
 
-set(CPACK_PACKAGE_NAME "WI Macropad")
+set(CPACK_PACKAGE_NAME "Macropadxc")
 set(CPACK_PACKAGE_VENDOR "razenxc")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Macropad driver")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Macropadxc driver")
 set(CPACK_PACKAGE_VERSION "1.0.0")
 
 if(WIN32)
     set(CPACK_GENERATOR "NSIS")
     
-    set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut '$DESKTOP\\\\WI Macropad.lnk' '$INSTDIR\\\\bin\\\\WareClient.exe'")
+    set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut '$DESKTOP\\\\Macropadxc.lnk' '$INSTDIR\\\\bin\\\\WareClient.exe'")
     
     set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
-        WriteRegStr HKCU 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' 'WIMacropadService' '\\\"$INSTDIR\\\\bin\\\\WareService.exe\\\" --no-console'
+        WriteRegStr HKCU 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' 'MacropadxcService' '\\\"$INSTDIR\\\\bin\\\\WareService.exe\\\" --no-console'
         
         SetOutPath '$INSTDIR\\\\bin'
         
@@ -99,51 +99,54 @@ if(WIN32)
     ")
     
     set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "
-        DeleteRegValue HKCU 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' 'WIMacropadService'
+        DeleteRegValue HKCU 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' 'MacropadxcService'
         nsExec::ExecToLog 'taskkill /F /IM WareService.exe'
     ")
 elseif(UNIX AND NOT APPLE)
     set(CPACK_GENERATOR "DEB")
 
-    set(CPACK_DEBIAN_PACKAGE_NAME "wimacropad")
+    set(CPACK_DEBIAN_PACKAGE_NAME "macropadxc")
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "razenxc")
     set(CPACK_DEBIAN_PACKAGE_DEPENDS "playerctl, pulseaudio-utils, xdg-utils, ydotool")
     
-    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/wimacropad.service"
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/macropadxc.service"
     "[Unit]
-    Description=WI MacroPad Service (User Level)
+    Description=Macropadxc Service (User Level)
     After=graphical-session.target
 
     [Service]
     Type=simple
-    ExecStart=/usr/bin/WareService --no-console
+    ExecStart=/opt/Macropadxc/WareService --no-console
     Restart=on-failure
 
     [Install]
     WantedBy=default.target
     ")
 
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/wimacropad.service" DESTINATION /usr/lib/systemd/user)
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/macropadxc.service" DESTINATION /usr/lib/systemd/user)
 
     install(CODE "
         execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink
-        /usr/lib/systemd/user/wimacropad.service
-        \$ENV{DESTDIR}/usr/lib/systemd/user/default.target.wants/wimacropad.service)
+        /usr/lib/systemd/user/macropadxc.service
+        \$ENV{DESTDIR}/usr/lib/systemd/user/default.target.wants/macropadxc.service)
     ")
 
-    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/wimacropad.desktop"
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/macropadxc.desktop"
     "[Desktop Entry]
     Version=1.0
     Type=Application
-    Name=WI Macropad
-    Comment=Macropad Configuration Client
+    Name=Macropadxc
+    Comment=Macropadxc Configuration Client
     Exec=/usr/bin/WareClient
     Icon=wimacropad
     Terminal=false
     Categories=Utility;HardwareSettings;
     ")
     
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/wimacropad.desktop" DESTINATION /usr/share/applications)
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/macropadxc.desktop" DESTINATION /usr/share/applications)
+    
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/postinst" "#!/bin/sh\nchmod 777 /opt/Macropadxc\n")
+    set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_BINARY_DIR}/postinst")
 endif()
 
 include(CPack)

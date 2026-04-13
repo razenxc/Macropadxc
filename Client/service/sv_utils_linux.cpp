@@ -32,12 +32,12 @@ namespace SystemUtils
 
     void volumeUp()
     {
-        run("playerctl volume 0.05+"); // increases by 5%
+        run("pactl set-sink-volume @DEFAULT_SINK@ +5%");
     }
 
     void volumeDown()
     {
-        run("playerctl volume 0.05-"); // decreases by 5%
+        run("pactl set-sink-volume @DEFAULT_SINK@ -5%");
     }
 
     void volumeMute()
