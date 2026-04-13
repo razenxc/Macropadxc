@@ -48,11 +48,16 @@ int entryPoint()
 {
     if (!glfwInit()) return -1;
 
-    glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-    glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
-    glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+    #ifdef _WIN32
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+        glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
+        glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
+    #else
+        glfwWindowHint(GLFW_VISIBLE, GLFW_TRUE);
+        glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
+    #endif
 
-    window = glfwCreateWindow(800, 600, "", NULL, NULL);
+    window = glfwCreateWindow(800, 600, "Macropadxc", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -70,7 +75,11 @@ int entryPoint()
     ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
-    io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+
+    #ifdef _WIN32
+        io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
+    #endif
+
     io.ConfigViewportsNoAutoMerge = true;
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init();
