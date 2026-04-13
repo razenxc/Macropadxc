@@ -1,3 +1,5 @@
+# ======
+# CMake
 cmake_minimum_required(VERSION 3.10)
 project(WareInteraction)
 
@@ -73,3 +75,55 @@ target_link_libraries(imgui PUBLIC glfw)
 # ===== Service & Client =====
 add_subdirectory(service)
 add_subdirectory(client)
+
+# ======
+# CPack
+install(TARGETS WareClient WareService DESTINATION bin)
+
+set(CPACK_PACKAGE_NAME "WI Macropad")
+set(CPACK_PACKAGE_VENDOR "razenxc")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Macropad driver")
+set(CPACK_PACKAGE_VERSION "1.0.0")
+
+if(WIN32)
+    set(CPACK_GENERATOR "NSIS")
+    
+    set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut '$DESKTOP\\\\WI Macropad.lnk' '$INSTDIR\\\\bin\\\\WareClient.exe'")
+    
+    set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
+        WriteRegStr HKCU 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' 'WIMacropadService' '\\\"$INSTDIR\\\\bin\\\\WareService.exe\\\" --no-console'
+        
+        SetOutPath '$INSTDIR\\\\bin'
+        
+        ExecShell 'open' '$INSTDIR\\\\bin\\\\WareService.exe' '--no-console'
+    ")
+    
+    set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "
+        DeleteRegValue HKCU 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' 'WIMacropadService'
+        nsExec::ExecToLog 'taskkill /F /IM WareService.exe'
+    ")
+elseif(UNIX AND NOT APPLE)
+    set(CPACK_GENERATOR "DEB")
+    
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "razenxc")
+    
+    # set(CPACK_DEBIAN_PACKAGE_DEPENDS "libglfw3")
+    
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/wimacropad.service"
+    "[Unit]
+    Description=WI MacroPad Service (User Level)
+    After=graphical-session.target
+
+    [Service]
+    Type=simple
+    ExecStart=/usr/bin/WareService --no-console
+    Restart=on-failure
+
+    [Install]
+    WantedBy=default.target
+    ")
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/wimacropad.service" DESTINATION /usr/lib/systemd/user)
+endif()
+
+include(CPack)

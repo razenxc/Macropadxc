@@ -13,19 +13,24 @@
 - Microsoft Visual C++ Redistributable
 
 ---
+---
+---
 
-## 🧰 Dependencies
+---
+---
+---
+## 🛠️ Build
+
+### 🧰 Dependencies
 
 - CMake 
 - C++ Compiler
 - Python (for build script)
 
-## 🐧 Dependencies for linux
+### 🐧 Dependencies for linux
 
 - `sudo apt install libwayland-dev libxkbcommon-dev xorg-dev`
 - - More details: https://www.glfw.org/docs/latest/compile_guide.html#compile_deps_wayland
-
-## 🛠️ Build
 
 ### 🐧 Linux
 
@@ -37,6 +42,29 @@ python3 build.py
 
 ```py
 py build.py
+```
+
+## 📦 Build Installer
+
+### 📦 CPack Dependencies
+
+- Windows: [NSIS](https://nsis.sourceforge.io/Download)
+- Debian: [dpkg](https://wiki.debian.org/dpkg)
+
+```bash
+cd build
+```
+
+### 🐧 Debian
+
+```bash
+cpack -G DEB
+```
+
+### 🪟 Windows
+
+```bash
+cpack -G NSIS
 ```
 
 ## ⚙️ Configuration example
@@ -63,9 +91,7 @@ py build.py
 - [glfw/glfw](https://github.com/glfw/glfw)
 
 ---
-
 ---
-
 ---
 
 # [🎛️FIRMWARE](Firmware)
