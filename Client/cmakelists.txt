@@ -104,10 +104,10 @@ if(WIN32)
     ")
 elseif(UNIX AND NOT APPLE)
     set(CPACK_GENERATOR "DEB")
-    
+
+    set(CPACK_DEBIAN_PACKAGE_NAME "wimacropad")
     set(CPACK_DEBIAN_PACKAGE_MAINTAINER "razenxc")
-    
-    # set(CPACK_DEBIAN_PACKAGE_DEPENDS "libglfw3")
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "playerctl, pulseaudio-utils, xdg-utils, ydotool")
     
     file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/wimacropad.service"
     "[Unit]
@@ -124,6 +124,26 @@ elseif(UNIX AND NOT APPLE)
     ")
 
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/wimacropad.service" DESTINATION /usr/lib/systemd/user)
+
+    install(CODE "
+        execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink
+        /usr/lib/systemd/user/wimacropad.service
+        \$ENV{DESTDIR}/usr/lib/systemd/user/default.target.wants/wimacropad.service)
+    ")
+
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/wimacropad.desktop"
+    "[Desktop Entry]
+    Version=1.0
+    Type=Application
+    Name=WI Macropad
+    Comment=Macropad Configuration Client
+    Exec=/usr/bin/WareClient
+    Icon=wimacropad
+    Terminal=false
+    Categories=Utility;HardwareSettings;
+    ")
+    
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/wimacropad.desktop" DESTINATION /usr/share/applications)
 endif()
 
 include(CPack)
