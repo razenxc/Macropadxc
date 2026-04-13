@@ -78,7 +78,13 @@ add_subdirectory(client)
 
 # ======
 # CPack
-install(TARGETS WareClient WareService DESTINATION /opt/Macropadxc)
+if (WIN32)
+    set(USERVAR_INSTALL_PATH bin)
+else()
+    set(USERVAR_INSTALL_PATH /opt/Macropadxc)
+endif()
+
+install(TARGETS WareClient WareService DESTINATION ${USERVAR_INSTALL_PATH})
 
 set(CPACK_PACKAGE_NAME "Macropadxc")
 set(CPACK_PACKAGE_VENDOR "razenxc")

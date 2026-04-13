@@ -21,7 +21,7 @@
 > [!WARNING]  
 > 1. You **MUST** add your user to the `input` group to allow `ydotool` to simulate keystrokes:
 >    `sudo usermod -aG input $USER`
-> 2. You must **log out and log back in** (or reboot) for the group permissions to apply and for the `wimacropad.service` auto-start to take effect.
+> 2. You must **log out and log back in** (or reboot) for the group permissions to apply and for the `macropadxc.service` auto-start to take effect.
 
 ### 🛠️ Build from Source
 **1. Install Build Dependencies:**
