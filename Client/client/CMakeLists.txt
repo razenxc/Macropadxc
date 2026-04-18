@@ -19,6 +19,7 @@ add_executable(WareClient ${SOURCES} ${SHARED_SOURCES})
 
 if(WIN32 OR MINGW OR MSYS OR CYGWIN)
     set_target_properties(WareClient PROPERTIES WIN32_EXECUTABLE ON)
+    set_target_properties(WareClient PROPERTIES LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\"")
 endif()
 
 target_include_directories(WareClient PRIVATE ../service)
