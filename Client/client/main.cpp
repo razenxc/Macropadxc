@@ -135,49 +135,61 @@ int entryPoint()
         }
         else
         {
-            for (int i = 1; i <= 9; i++)
+            if (ImGui::BeginTable("MacroGrid", 3, ImGuiTableFlags_BordersInner | ImGuiTableFlags_RowBg | ImGuiTableFlags_SizingStretchProp))
             {
-                std::string key = "F" + std::to_string(i);
-
-                ImGui::PushID(key.c_str());
-                ImGui::AlignTextToFramePadding();
-                ImGui::Text("Button F%d:", i);
-                ImGui::SameLine();
-
-                Action& action = Config::keyBindings[key];
-
-                int currentType = (int)action.type;
-                ImGui::SetNextItemWidth(200);
-                
-                if (ImGui::Combo("##type", &currentType, uiActionNames, IM_ARRAYSIZE(uiActionNames)))
+                for (int i = 1; i <= 9; i++)
                 {
-                    action.type = (ActionType)currentType;
-                    Config::write({key, action});
-                }
-
-                if (action.type == CMD_OPEN_URL || action.type == CMD_RUN_APP || action.type == CMD_PRESS_KEYS)
-                {
-                    ImGui::SameLine();
-                    ImGui::SetNextItemWidth(250);
+                    ImGui::TableNextColumn();
                     
-                    char buffer[256];
-                    strncpy(buffer, action.payload.c_str(), sizeof(buffer));
-                    buffer[sizeof(buffer)-1] = 0;
+                    std::string key = "F" + std::to_string(i);
 
-                    if (ImGui::InputText("##pay", buffer, sizeof(buffer)))
+                    ImGui::PushID(key.c_str());
+                    
+                    ImGui::Text("Button F%d", i);
+                    ImGui::Separator();
+
+                    Action& action = Config::keyBindings[key];
+                    int currentType = (int)action.type;
+                    
+                    ImGui::SetNextItemWidth(-FLT_MIN); 
+                    
+                    if (ImGui::Combo("##type", &currentType, uiActionNames, IM_ARRAYSIZE(uiActionNames)))
                     {
-                        action.payload = std::string(buffer);
+                        action.type = (ActionType)currentType;
                         Config::write({key, action});
                     }
 
-                    if (ImGui::IsItemHovered())
+                    if (action.type == CMD_OPEN_URL || action.type == CMD_RUN_APP || action.type == CMD_PRESS_KEYS)
                     {
-                        if (action.type == CMD_OPEN_URL) ImGui::SetTooltip("Example: https://youtube.com");
-                        else if (action.type == CMD_RUN_APP) ImGui::SetTooltip("Example: notepad.exe");
-                        else if (action.type == CMD_PRESS_KEYS) ImGui::SetTooltip("Example: CTRL+C or WIN+D");
+                        ImGui::SetNextItemWidth(-FLT_MIN);
+                        
+                        char buffer[256];
+                        strncpy(buffer, action.payload.c_str(), sizeof(buffer));
+                        buffer[sizeof(buffer)-1] = 0;
+
+                        if (ImGui::InputTextWithHint("##pay", "Enter payload...", buffer, sizeof(buffer)))
+                        {
+                            action.payload = std::string(buffer);
+                            Config::write({key, action});
+                        }
+
+                        if (ImGui::IsItemHovered())
+                        {
+                            if (action.type == CMD_OPEN_URL) ImGui::SetTooltip("Example: https://youtube.com");
+                            else if (action.type == CMD_RUN_APP) ImGui::SetTooltip("Example: notepad.exe");
+                            else if (action.type == CMD_PRESS_KEYS) ImGui::SetTooltip("Example: CTRL+C or WIN+D");
+                        }
                     }
+                    else
+                    {
+                        ImGui::Dummy(ImVec2(0.0f, ImGui::GetFrameHeight())); 
+                    }
+
+                    ImGui::Dummy(ImVec2(0.0f, 5.0f)); 
+
+                    ImGui::PopID();
                 }
-                ImGui::PopID();
+                ImGui::EndTable();
             }
         }
 
