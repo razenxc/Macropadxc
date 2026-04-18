@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-const unsigned PINS[] = { 15, 14, 13, 12, 11, 10, 9, 8, 7 };
+const unsigned PINS[] = { 15, 13, 11, 9, 7, 5, 3, 1, 16 };
 const unsigned short BUTTON_COUNT = 9;
 
 int lastButtonState[BUTTON_COUNT];
