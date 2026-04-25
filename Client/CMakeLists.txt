@@ -97,11 +97,13 @@ if(WIN32)
     set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut '$DESKTOP\\\\Macropadxc.lnk' '$INSTDIR\\\\bin\\\\WareClient.exe'")
     
     set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
-        WriteRegStr HKCU 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' 'MacropadxcService' '\\\"$INSTDIR\\\\bin\\\\WareService.exe\\\" --no-console'
+        WriteRegStr HKCU 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' 'MacropadxcService' '\\\"$INSTDIR/bin/WareService.exe\\\" --no-console'
         
-        SetOutPath '$INSTDIR\\\\bin'
+        SetOutPath '$INSTDIR/bin'
         
-        ExecShell 'open' '$INSTDIR\\\\bin\\\\WareService.exe' '--no-console'
+        ExecWait 'icacls \\\"$INSTDIR\\\" /grant *S-1-5-32-545:(OI)(CI)M /T'
+        
+        ExecShell 'open' '$INSTDIR/bin/WareService.exe' '--no-console'
     ")
     
     set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "
