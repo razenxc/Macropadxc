@@ -145,7 +145,7 @@ elseif(UNIX AND NOT APPLE)
     Type=Application
     Name=Macropadxc
     Comment=Macropadxc Configuration Client
-    Exec=/usr/bin/WareClient
+    Exec=/opt/Macropadxc/WareClient
     Icon=wimacropad
     Terminal=false
     Categories=Utility;HardwareSettings;
