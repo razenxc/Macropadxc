@@ -54,7 +54,7 @@ namespace SystemUtils
     void runApplication(const std::string& path)
     {
         if (path.empty()) return;
-        std::string cmd = path + " &";
+        std::string cmd = "\"" + path + "\" &";
         int ret = system(cmd.c_str());
         (void)ret;
     }

@@ -92,7 +92,7 @@ int entryPoint()
 
     #ifdef _WIN32
         serviceExeName = "WareService.exe";
-    #elif
+    #else
         serviceExeName = "WareService";
     #endif
 
