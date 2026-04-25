@@ -88,9 +88,11 @@ int entryPoint()
 
     auto lastCheckTime = std::chrono::steady_clock::now();
     bool isServiceRunning = true;
-    std::string serviceExeName = "WareService.exe"; 
+    std::string serviceExeName; 
 
-    #ifndef _WIN32
+    #ifdef _WIN32
+        serviceExeName = "WareService.exe";
+    #elif
         serviceExeName = "WareService";
     #endif
 
