@@ -135,6 +135,10 @@ int main(int argc, char* argv[])
                     Actions::execute(data);
                 }
             }
+            else 
+            {
+                std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Prevent CPU load
+            }
         } 
         catch (serial::SerialException& e)
         {
