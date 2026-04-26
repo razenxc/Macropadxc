@@ -1,3 +1,5 @@
+set(MACROPADXC_CURRENT_VERSION 1.0.1)
+
 # ======
 # CMake
 cmake_minimum_required(VERSION 3.10)
@@ -89,7 +91,7 @@ install(TARGETS WareClient WareService DESTINATION ${USERVAR_INSTALL_PATH})
 set(CPACK_PACKAGE_NAME "Macropadxc")
 set(CPACK_PACKAGE_VENDOR "razenxc")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Macropadxc driver")
-set(CPACK_PACKAGE_VERSION "1.0.0")
+set(CPACK_PACKAGE_VERSION ${MACROPADXC_CURRENT_VERSION})
 
 if(WIN32)
     set(CPACK_GENERATOR "NSIS")
@@ -133,12 +135,6 @@ elseif(UNIX AND NOT APPLE)
 
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/macropadxc.service" DESTINATION /usr/lib/systemd/user)
 
-    install(CODE "
-        execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink
-        /usr/lib/systemd/user/macropadxc.service
-        \$ENV{DESTDIR}/usr/lib/systemd/user/default.target.wants/macropadxc.service)
-    ")
-
     file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/macropadxc.desktop"
     "[Desktop Entry]
     Version=1.0
@@ -153,7 +149,19 @@ elseif(UNIX AND NOT APPLE)
     
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/macropadxc.desktop" DESTINATION /usr/share/applications)
     
-    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/postinst" "#!/bin/sh\nchmod 777 /opt/Macropadxc\n")
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/postinst" 
+    "#!/bin/sh
+    chmod 777 /opt/Macropadxc
+
+    systemctl --global daemon-reload
+    systemctl --global enable macropadxc.service
+    ")
+
+    file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/prerm" 
+    "#!/bin/sh
+    systemctl --global disable macropadxc.service
+    ")
+
     set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_BINARY_DIR}/postinst")
 endif()
 
