@@ -91,7 +91,8 @@ namespace SystemUtils
 
         while (std::getline(ss, token, '+')) 
         {
-            if (!ydotool_combo.empty()) {
+            if (!ydotool_combo.empty()) 
+            {
                 ydotool_combo += "+"; 
             }
             ydotool_combo += mapKeyToYdotool(token);
