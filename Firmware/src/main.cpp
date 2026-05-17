@@ -15,13 +15,15 @@ void setup()
   
   digitalWrite(25, HIGH);
   unsigned long startWait = millis();
-  while (!Serial && (millis() - startWait < 5000)) {
+  while (!Serial && (millis() - startWait < 5000)) 
+  {
     digitalWrite(25, (millis() / 100) % 2); 
     delay(10);
   }
   digitalWrite(25, LOW);
 
-  for (int i = 0; i < BUTTON_COUNT; i++) {
+  for (int i = 0; i < BUTTON_COUNT; i++) 
+  {
     pinMode(PINS[i], INPUT_PULLUP);
     lastButtonState[i] = HIGH; 
     lastDepressTime[i] = 0;
