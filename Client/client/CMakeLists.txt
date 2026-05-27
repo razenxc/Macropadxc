@@ -15,16 +15,16 @@ else()
     list(APPEND SOURCES cl_utils_linux.cpp)
 endif()
 
-add_executable(WareClient ${SOURCES} ${SHARED_SOURCES})
+add_executable(MacropadxcClient ${SOURCES} ${SHARED_SOURCES})
 
 if(WIN32 OR MINGW OR MSYS OR CYGWIN)
-    set_target_properties(WareClient PROPERTIES WIN32_EXECUTABLE ON)
-    set_target_properties(WareClient PROPERTIES LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\"")
+    set_target_properties(MacropadxcClient PROPERTIES WIN32_EXECUTABLE ON)
+    set_target_properties(MacropadxcClient PROPERTIES LINK_FLAGS "/MANIFESTUAC:\"level='requireAdministrator' uiAccess='false'\"")
 endif()
 
-target_include_directories(WareClient PRIVATE ../service)
+target_include_directories(MacropadxcClient PRIVATE ../service)
 
-target_link_libraries(WareClient 
+target_link_libraries(MacropadxcClient 
     PRIVATE
     glad
     glfw 
@@ -33,4 +33,4 @@ target_link_libraries(WareClient
 )
 
 find_package(OpenGL REQUIRED)
-target_link_libraries(WareClient PRIVATE ${OPENGL_LIBRARIES})
+target_link_libraries(MacropadxcClient PRIVATE ${OPENGL_LIBRARIES})

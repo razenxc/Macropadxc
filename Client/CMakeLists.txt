@@ -1,9 +1,9 @@
-set(MACROPADXC_CURRENT_VERSION 1.0.1)
+set(MACROPADXC_CURRENT_VERSION 1.0.2)
 
 # ======
 # CMake
 cmake_minimum_required(VERSION 3.10)
-project(WareInteraction)
+project(Macropadxc)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -86,7 +86,7 @@ else()
     set(USERVAR_INSTALL_PATH /opt/Macropadxc)
 endif()
 
-install(TARGETS WareClient WareService DESTINATION ${USERVAR_INSTALL_PATH})
+install(TARGETS MacropadxcClient MacropadxcService DESTINATION ${USERVAR_INSTALL_PATH})
 
 set(CPACK_PACKAGE_NAME "Macropadxc")
 set(CPACK_PACKAGE_VENDOR "razenxc")
@@ -96,21 +96,21 @@ set(CPACK_PACKAGE_VERSION ${MACROPADXC_CURRENT_VERSION})
 if(WIN32)
     set(CPACK_GENERATOR "NSIS")
     
-    set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut '$DESKTOP\\\\Macropadxc.lnk' '$INSTDIR\\\\bin\\\\WareClient.exe'")
+    set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut '$DESKTOP\\\\Macropadxc.lnk' '$INSTDIR\\\\bin\\\\MacropadxcClient.exe'")
     
     set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "
-        WriteRegStr HKCU 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' 'MacropadxcService' '\\\"$INSTDIR/bin/WareService.exe\\\" --no-console'
+        WriteRegStr HKCU 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' 'MacropadxcService' '\\\"$INSTDIR/bin/MacropadxcService.exe\\\" --no-console'
         
         SetOutPath '$INSTDIR/bin'
         
         ExecWait 'icacls \\\"$INSTDIR\\\" /grant *S-1-5-32-545:(OI)(CI)M /T'
         
-        ExecShell 'open' '$INSTDIR/bin/WareService.exe' '--no-console'
+        ExecShell 'open' '$INSTDIR/bin/MacropadxcService.exe' '--no-console'
     ")
     
     set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "
         DeleteRegValue HKCU 'Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run' 'MacropadxcService'
-        nsExec::ExecToLog 'taskkill /F /IM WareService.exe'
+        nsExec::ExecToLog 'taskkill /F /IM MacropadxcService.exe'
     ")
 elseif(UNIX AND NOT APPLE)
     set(CPACK_GENERATOR "DEB")
@@ -126,7 +126,7 @@ elseif(UNIX AND NOT APPLE)
 
     [Service]
     Type=simple
-    ExecStart=/opt/Macropadxc/WareService --no-console
+    ExecStart=/opt/Macropadxc/MacropadxcService --no-console
     Restart=on-failure
 
     [Install]
@@ -141,7 +141,7 @@ elseif(UNIX AND NOT APPLE)
     Type=Application
     Name=Macropadxc
     Comment=Macropadxc Configuration Client
-    Exec=/opt/Macropadxc/WareClient
+    Exec=/opt/Macropadxc/MacropadxcClient
     Icon=wimacropad
     Terminal=false
     Categories=Utility;HardwareSettings;

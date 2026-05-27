@@ -91,9 +91,9 @@ int entryPoint()
     std::string serviceExeName; 
 
     #ifdef _WIN32
-        serviceExeName = "WareService.exe";
+        serviceExeName = "MacropadxcService.exe";
     #else
-        serviceExeName = "WareService";
+        serviceExeName = "MacropadxcService";
     #endif
 
     while (!glfwWindowShouldClose(window))
@@ -115,7 +115,7 @@ int entryPoint()
         // ==== BEGIN =====
         bool isOpen = true;
 
-        ImGui::Begin("Ware Client", &isOpen);
+        ImGui::Begin("Macropadxc Client", &isOpen);
 
         if (!isOpen)
         {

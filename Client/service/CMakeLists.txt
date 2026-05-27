@@ -12,14 +12,14 @@ else()
     list(APPEND THE_SOURCES sv_utils_linux.cpp)
 endif()
 
-add_executable(WareService ${THE_SOURCES})
+add_executable(MacropadxcService ${THE_SOURCES})
 
 if(WIN32 OR MINGW OR MSYS OR CYGWIN)
-    target_link_libraries(WareService PRIVATE setupapi)
+    target_link_libraries(MacropadxcService PRIVATE setupapi)
 endif()
 
-target_link_options(WareService PRIVATE "-static")
+target_link_options(MacropadxcService PRIVATE "-static")
 
-target_include_directories(WareService PRIVATE .)
-target_link_libraries(WareService PRIVATE serial_lib)
-target_link_libraries(WareService PRIVATE nlohmann_json::nlohmann_json)
+target_include_directories(MacropadxcService PRIVATE .)
+target_link_libraries(MacropadxcService PRIVATE serial_lib)
+target_link_libraries(MacropadxcService PRIVATE nlohmann_json::nlohmann_json)
