@@ -177,7 +177,7 @@ int entryPoint()
 
                         if (ImGui::IsItemHovered())
                         {
-                            if (action.type == CMD_OPEN_URL) ImGui::SetTooltip("Example: https://youtube.com");
+                            if (action.type == CMD_OPEN_URL) ImGui::SetTooltip("Example: https://example.com");
                             else if (action.type == CMD_RUN_APP) ImGui::SetTooltip("Example: notepad.exe");
                             else if (action.type == CMD_PRESS_KEYS) ImGui::SetTooltip("Example: CTRL+C or WIN+D");
                         }
