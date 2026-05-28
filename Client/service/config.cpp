@@ -34,7 +34,7 @@ void Config::init()
     data["F2"] = { {"type", CMD_MEDIA_PLAY_PAUSE}, {"payload", ""} };
     data["F3"] = { {"type", CMD_MEDIA_NEXT},       {"payload", ""} };
     data["F4"] = { {"type", CMD_VOLUME_UP},        {"payload", ""} };
-    data["F5"] = { {"type", CMD_VOLUME_MUTE},      {"payload", "https://google.com"} };
+    data["F5"] = { {"type", CMD_VOLUME_MUTE},      {"payload", "https://example.com"} };
     data["F6"] = { {"type", CMD_RUN_APP},          {"payload", "notepad.exe"} };
     data["F7"] = { {"type", CMD_VOLUME_DOWN},      {"payload", ""} };
     data["F8"] = { {"type", CMD_NONE},             {"payload", ""} };
