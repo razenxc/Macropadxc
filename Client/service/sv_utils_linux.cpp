@@ -111,7 +111,7 @@ namespace SystemUtils
     {
         char result[PATH_MAX];
 
-        ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+        size_t count = readlink("/proc/self/exe", result, PATH_MAX);
         
         if (count != -1) 
         {
