@@ -47,6 +47,8 @@ You can assign the following types of commands to any key:
 The software features **Hot-Reloading**. The moment you change an action type or type a new payload in the GUI, the `config.json` file is automatically updated. The background service detects this change and applies your new settings instantly - no manual saving or restarting required!
 
 # [💻 CLIENT](Client)
+<img width="600" height="300" alt="image" src="https://github.com/user-attachments/assets/404570cb-1ead-4bd3-a36a-351355550535" />
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/40b3bae3-9f98-4fa8-9013-81bdf49a0373" />
 
 ## 🐧 Linux
 
