@@ -157,7 +157,7 @@ cpack -G NSIS
 
 ### 📟 Hardware:
 
-Raspberry Pi Pico (YD-RP2040); 9 push buttons connected to individual ports; 3D printed case.
+Raspberry Pi Pico (YD-RP2040); 9 push buttons connected to individual pins; 3D printed case.
 
 ## 🔌 Pinout
 
