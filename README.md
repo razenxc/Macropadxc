@@ -1,7 +1,17 @@
 # 🕹️ [Macropadxc](https://github.com/razenxc/Macropadxc)
 
-<img width="500" alt="20260530_221728" src="https://github.com/user-attachments/assets/d97d3ddc-9123-43c8-ad13-f4772b6c14ff" />
-<img width="500" alt="20260530_221754" src="https://github.com/user-attachments/assets/9d003f9a-2ed4-4905-b14f-01c454ca5fee" />
+## Prototypes
+
+| V1 | V2 | V3| V4 |
+| :---: | :---: | :---: | :---: |
+| <img width="200" alt="prototype 1" src="https://github.com/user-attachments/assets/6370f186-952d-4878-9d39-d4392d2f271d" /> | <img width="200" alt="prototype 2" src="https://github.com/user-attachments/assets/c967e57e-3924-4c00-a468-a79b0e5f346b" /> | <img width="200" alt="prototype 3" src="https://github.com/user-attachments/assets/decfb6ee-367b-40cd-8e0e-fe2dca8d4984" /> | <img width="200" alt="final prototype" src="https://github.com/user-attachments/assets/0fae24c2-e178-492b-94c9-b7aeecad5dcd" /> |
+
+## Final prototype
+| 1 | 2 |
+| :---: | :---: |
+| <img width="500" alt="20260530_221728" src="https://github.com/user-attachments/assets/d97d3ddc-9123-43c8-ad13-f4772b6c14ff" /> | <img width="500" alt="20260530_221754" src="https://github.com/user-attachments/assets/9d003f9a-2ed4-4905-b14f-01c454ca5fee" /> |
+
+
 
 # 📖 [User Guide](README.md)
 
@@ -191,3 +201,9 @@ F9 - 7
 
   - RX: `WAREI_HEY`
   - TX: `WAREI_OK`
+
+
+
+
+
+
