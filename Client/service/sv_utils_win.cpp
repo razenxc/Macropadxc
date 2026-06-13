@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#include <map>
 
 namespace SystemUtils
 {
@@ -54,18 +55,61 @@ namespace SystemUtils
         
         for(auto& c : key) c = toupper(c);
 
-        if(key == "CTRL" || key == "CONTROL") return VK_CONTROL;
-        if(key == "SHIFT") return VK_SHIFT;
-        if(key == "ALT") return VK_MENU;
-        if(key == "WIN" || key == "META") return VK_LWIN;
-        if(key == "ENTER") return VK_RETURN;
-        if(key == "TAB") return VK_TAB;
-        if(key == "ESC" || key == "ESCAPE") return VK_ESCAPE;
-        if(key == "SPACE") return VK_SPACE;
-        if(key == "UP") return VK_UP;
-        if(key == "DOWN") return VK_DOWN;
-        if(key == "LEFT") return VK_LEFT;
-        if(key == "RIGHT") return VK_RIGHT;
+        static const std::map<std::string, WORD> keyDictionary = {
+            // System and modifiers
+            {"ESC", VK_ESCAPE},
+            {"CONTROL", VK_CONTROL}, {"CTRL", VK_CONTROL}, {"LCTRL", VK_LCONTROL}, {"RCTRL", VK_RCONTROL},
+            {"SHIFT", VK_SHIFT}, {"LSHIFT", VK_LSHIFT}, {"RSHIFT", VK_RSHIFT},
+            {"ALT", VK_MENU}, {"LALT", VK_LMENU}, {"RALT", VK_RMENU},
+            {"WIN", VK_LWIN}, {"SUPER", VK_LWIN}, {"META", VK_LWIN}, {"RWIN", VK_RWIN}, // Аліаси для Win
+            {"ENTER", VK_RETURN}, {"TAB", VK_TAB}, {"SPACE", VK_SPACE}, {"BACKSPACE", VK_BACK},
+            {"CAPSLOCK", VK_CAPITAL}, {"APPS", VK_APPS}, // APPS - це кнопка "Меню" біля правого Ctrl
+
+            // Navigation
+            {"UP", VK_UP}, {"DOWN", VK_DOWN}, {"LEFT", VK_LEFT}, {"RIGHT", VK_RIGHT},
+            {"INSERT", VK_INSERT}, {"DELETE", VK_DELETE}, {"DEL", VK_DELETE},
+            {"HOME", VK_HOME}, {"END", VK_END}, {"PAGEUP", VK_PRIOR}, {"PAGEDOWN", VK_NEXT},
+            {"PRINTSCREEN", VK_SNAPSHOT}, {"PRTSC", VK_SNAPSHOT}, {"SCROLLLOCK", VK_SCROLL}, {"PAUSE", VK_PAUSE},
+
+            // Function keys
+            {"F1", VK_F1}, {"F2", VK_F2}, {"F3", VK_F3}, {"F4", VK_F4},
+            {"F5", VK_F5}, {"F6", VK_F6}, {"F7", VK_F7}, {"F8", VK_F8},
+            {"F9", VK_F9}, {"F10", VK_F10}, {"F11", VK_F11}, {"F12", VK_F12},
+            {"F13", VK_F13}, {"F14", VK_F14}, {"F15", VK_F15}, {"F16", VK_F16},
+            {"F17", VK_F17}, {"F18", VK_F18}, {"F19", VK_F19}, {"F20", VK_F20},
+            {"F21", VK_F21}, {"F22", VK_F22}, {"F23", VK_F23}, {"F24", VK_F24},
+
+            // Numpad
+            {"NUM0", VK_NUMPAD0}, {"NUM1", VK_NUMPAD1}, {"NUM2", VK_NUMPAD2}, {"NUM3", VK_NUMPAD3},
+            {"NUM4", VK_NUMPAD4}, {"NUM5", VK_NUMPAD5}, {"NUM6", VK_NUMPAD6}, {"NUM7", VK_NUMPAD7},
+            {"NUM8", VK_NUMPAD8}, {"NUM9", VK_NUMPAD9},
+            {"NUMMULTIPLY", VK_MULTIPLY}, // Numpad *
+            {"NUMADD", VK_ADD},           // Numpad +
+            {"NUMSUBTRACT", VK_SUBTRACT}, // Numpad -
+            {"NUMDECIMAL", VK_DECIMAL},   // Numpad .
+            {"NUMDIVIDE", VK_DIVIDE},     // Numpad /
+            {"NUMLOCK", VK_NUMLOCK},
+
+            // Punctuation marks
+            {";", VK_OEM_1}, {":", VK_OEM_1},
+            {"+", VK_OEM_PLUS}, {"=", VK_OEM_PLUS},
+            {",", VK_OEM_COMMA}, {"<", VK_OEM_COMMA},
+            {"-", VK_OEM_MINUS}, {"_", VK_OEM_MINUS},
+            {".", VK_OEM_PERIOD}, {">", VK_OEM_PERIOD},
+            {"/", VK_OEM_2}, {"?", VK_OEM_2},
+            {"~", VK_OEM_3}, {"`", VK_OEM_3},
+            {"[", VK_OEM_4}, {"{", VK_OEM_4},
+            {"\\", VK_OEM_5}, {"|", VK_OEM_5},
+            {"]", VK_OEM_6}, {"}", VK_OEM_6},
+            {"'", VK_OEM_7}, {"\"", VK_OEM_7}
+        };
+
+        auto it = keyDictionary.find(key);
+
+        if (it != keyDictionary.end())
+        {
+            return it->second;
+        }
 
         if(key.length() == 1) 
         {

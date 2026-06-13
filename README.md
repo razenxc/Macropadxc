@@ -31,26 +31,42 @@ The graphical interface provides a grid that mirrors the 9 physical buttons on y
 
 ### 3. Available Actions & Payloads
 
-You can assign the following types of commands to any key:
+You can assign the following types of commands to any key using the configuration file or GUI client:
 
 * **Media Controls:** `Play/Pause`, `Previous`, `Next`.
 * **Volume Controls:** `Volume Up`, `Volume Down`, `Mute`.
-* **Open Website (URI):** Opens a specific URL in your default browser.
-* * *Payload Example:* `https://example.com`
+* **Open Website (URI):** Opens a specific URL in your default web browser.
+  * *Payload Example:* `https://example.com`
+  * *Payload Example:* `https://youtube.com`
+* **Run Application:** Executes a system program, script, or opens a specific file.
+  * *Payload Example (Windows):* `notepad.exe` or `C:\Tools\script.bat`
+  * *Payload Example (Linux):* `gnome-calculator` or `/opt/scripts/run.sh`
+* **None:** Disables the key completely.
 
-* **Run Application:** Executes a system program, script, or opens a file.
-* * *Payload Example (Windows):* `notepad.exe` or `C:\Tools\script.bat`
-* * *Payload Example (Linux):* `gnome-calculator` or `/opt/scripts/run.sh`
-
-**Press Keys (Combo):** Simulates a complex keyboard shortcut at the OS level. Combine keys using the `+` symbol.
+#### ⌨️ Press Keys (Combo)
+Simulates a complex keyboard shortcut at the OS level. Combine keys using the `+` symbol. This is fully cross-platform and works in games, OBS, and IDEs.
 * *Payload Example:* `CTRL+SHIFT+ESC` or `WIN+D`
-* **Supported Keys (Case-insensitive):**
-* * **Modifiers:** `CTRL` (or `CONTROL`), `SHIFT`, `ALT`, `WIN` (or `META`)
-* * **Special:** `ENTER`, `TAB`, `ESC` (or `ESCAPE`), `SPACE`
-* * **Arrows:** `UP`, `DOWN`, `LEFT`, `RIGHT`
-* * **Alphanumeric:** Letters `A-Z` and numbers `0-9`
+* *Payload Example (OBS Virtual Keys):* `CTRL+F13`
 
-* **Anything (None):** Disables the key completely.
+**Supported Keys (Case-insensitive):**
+
+* **Alphanumeric:** Letters `A-Z` and numbers `0-9`
+* **Modifiers:** * `CTRL` (or `CONTROL`), `LCTRL`, `RCTRL`
+  * `SHIFT`, `LSHIFT`, `RSHIFT`
+  * `ALT`, `LALT`, `RALT`
+  * `WIN` (or `SUPER`, `META`), `RWIN`
+* **Virtual Function Keys (Great for OBS / Streaming):** `F1` through `F24`
+* **System & Special:** * `ESC` (or `ESCAPE`), `ENTER` (or `RETURN`), `TAB`, `SPACE`, `BACKSPACE`
+  * `CAPSLOCK`, `APPS` (Menu Key), `PRINTSCREEN` (or `PRTSC`), `SCROLLLOCK`, `PAUSE`
+* **Navigation:** * `UP`, `DOWN`, `LEFT`, `RIGHT`
+  * `INSERT`, `DELETE` (or `DEL`), `HOME`, `END`, `PAGEUP`, `PAGEDOWN`
+* **Numpad (Digital Block):** * `NUM0` to `NUM9`
+  * `NUMMULTIPLY` (`*`), `NUMADD` (`+`), `NUMSUBTRACT` (`-`), `NUMDECIMAL` (`.`), `NUMDIVIDE` (`/`), `NUMLOCK`
+* **Punctuation & Symbols:** * `;`, `:`, `+`, `=`, `,`, `<`, `-`, `_`, `.`, `>`, `/`, `?`, `~`, `[`, `{`, `]`, `}`, `\`, `|`, `'`, `"`
+  * For the backtick key use: `` ` ``
+* **Media Keys (Simulated Keystrokes):**
+  * `VOLUP`, `VOLDOWN`, `MUTE`
+  * `PLAYPAUSE`, `NEXTTRACK`, `PREVTRACK`
 
 ### 4. Applying Changes
 
