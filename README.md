@@ -37,7 +37,6 @@ You can assign the following types of commands to any key using the configuratio
 * **Volume Controls:** `Volume Up`, `Volume Down`, `Mute`.
 * **Open Website (URI):** Opens a specific URL in your default web browser.
   * *Payload Example:* `https://example.com`
-  * *Payload Example:* `https://youtube.com`
 * **Run Application:** Executes a system program, script, or opens a specific file.
   * *Payload Example (Windows):* `notepad.exe` or `C:\Tools\script.bat`
   * *Payload Example (Linux):* `gnome-calculator` or `/opt/scripts/run.sh`
@@ -46,7 +45,6 @@ You can assign the following types of commands to any key using the configuratio
 #### ⌨️ Press Keys (Combo)
 Simulates a complex keyboard shortcut at the OS level. Combine keys using the `+` symbol. This is fully cross-platform and works in games, OBS, and IDEs.
 * *Payload Example:* `CTRL+SHIFT+ESC` or `WIN+D`
-* *Payload Example (OBS Virtual Keys):* `CTRL+F13`
 
 **Supported Keys (Case-insensitive):**
 
@@ -55,7 +53,7 @@ Simulates a complex keyboard shortcut at the OS level. Combine keys using the `+
   * `SHIFT`, `LSHIFT`, `RSHIFT`
   * `ALT`, `LALT`, `RALT`
   * `WIN` (or `SUPER`, `META`), `RWIN`
-* **Virtual Function Keys (Great for OBS / Streaming):** `F1` through `F24`
+* **Virtual Function Keys:** `F1` through `F24`
 * **System & Special:** * `ESC` (or `ESCAPE`), `ENTER` (or `RETURN`), `TAB`, `SPACE`, `BACKSPACE`
   * `CAPSLOCK`, `APPS` (Menu Key), `PRINTSCREEN` (or `PRTSC`), `SCROLLLOCK`, `PAUSE`
 * **Navigation:** * `UP`, `DOWN`, `LEFT`, `RIGHT`
